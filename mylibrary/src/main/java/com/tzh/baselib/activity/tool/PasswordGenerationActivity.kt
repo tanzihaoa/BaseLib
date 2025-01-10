@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import com.gyf.immersionbar.ImmersionBar
 import com.tzh.baselib.R
 import com.tzh.baselib.base.XBaseBindingActivity
 import com.tzh.baselib.databinding.ActivityPasswordGenerationBinding
@@ -38,6 +39,7 @@ class PasswordGenerationActivity : XBaseBindingActivity<ActivityPasswordGenerati
     var length = 8
 
     override fun initView() {
+        ImmersionBar.with(this).transparentStatusBar().statusBarDarkFont(true).init()
         //默认选中数字 大小写字母
         binding.tvNum.isSelected = true
         binding.tvSmallLetter.isSelected = true

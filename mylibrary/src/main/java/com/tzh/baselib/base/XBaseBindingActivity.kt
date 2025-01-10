@@ -21,7 +21,7 @@ abstract class XBaseBindingActivity<B : ViewDataBinding>(@LayoutRes LayoutId: In
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
         //Activity管理
-        com.tzh.baselib.base.XAppActivityManager.getInstance().addActivity(this)
+        XAppActivityManager.getInstance().addActivity(this)
         binding = DataBindingUtil.inflate(layoutInflater, layoutResID, null, false)
         setContentView(binding.root)
         init()
@@ -64,7 +64,7 @@ abstract class XBaseBindingActivity<B : ViewDataBinding>(@LayoutRes LayoutId: In
     }
 
     override fun onDestroy() {
-        com.tzh.baselib.base.XAppActivityManager.getInstance().removeActivity(this)
+        XAppActivityManager.getInstance().removeActivity(this)
         super.onDestroy()
     }
 

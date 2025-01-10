@@ -3,6 +3,7 @@ package com.tzh.baselib.activity.tool
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import com.gyf.immersionbar.ImmersionBar
 import com.tzh.baselib.R
 import com.tzh.baselib.base.XBaseBindingActivity
 import com.tzh.baselib.databinding.ActivityTranslateBinding
@@ -38,6 +39,7 @@ class TranslateActivity : XBaseBindingActivity<ActivityTranslateBinding>(R.layou
     }
 
     override fun initView() {
+        ImmersionBar.with(this).transparentStatusBar().statusBarDarkFont(true).init()
         binding.activity = this
 
     }
