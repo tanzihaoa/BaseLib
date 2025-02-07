@@ -20,8 +20,8 @@ import java.util.List;
 public class GestureLockView extends View {
 
     private static final int POINT_COUNT = 3; // 3x3的点阵
-    private static final int POINT_RADIUS = 50; // 点的半径
-    private static final int LINE_WIDTH = 10; // 连接线的宽度
+    private static int POINT_RADIUS = 60; // 点的半径
+    private static int LINE_WIDTH = 16; // 连接线的宽度
     private static final int ANIMATION_DURATION = 150; // 动画时长
 
     private Paint paint;
@@ -45,6 +45,10 @@ public class GestureLockView extends View {
         unlockColor = attributes.getColor(R.styleable.GestureLockView_gv_unlock_color,context.getColor(R.color.color_666));
         //连接线颜色
         linerColor = attributes.getColor(R.styleable.GestureLockView_gv_liner_color,color);
+        //点的半径
+        POINT_RADIUS = attributes.getInt(R.styleable.GestureLockView_gv_point_radius,60);
+        //连接线的宽度
+        LINE_WIDTH = attributes.getInt(R.styleable.GestureLockView_gv_line_width,16);
         init();
     }
 

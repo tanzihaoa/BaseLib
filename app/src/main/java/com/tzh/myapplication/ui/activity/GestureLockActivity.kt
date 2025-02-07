@@ -34,7 +34,7 @@ class GestureLockActivity : AppBaseActivity<ActivityGestureLockBinding>(R.layout
 
     private fun isGestureCorrect(gesture: String): Boolean {
         // 这里应该与预设的手势进行比较
-        val correctGesture = "100,100;200,200;300,300;"
+        val correctGesture = "360,360;720,360;1080,360;1080,720;1080,1080;"
         return gesture == correctGesture
     }
 }
