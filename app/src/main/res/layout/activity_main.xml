@@ -111,7 +111,8 @@
         <com.tzh.baselib.shapeview.ShapeTextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="手动发短信"
             app:shapeCorners="20dp"
             android:gravity="center"
@@ -128,7 +129,8 @@
             android:id="@+id/tv_wza"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="无障碍模式"
             app:shapeCorners="20dp"
             android:gravity="center"
@@ -177,7 +179,8 @@
         <com.tzh.baselib.shapeview.ShapeTextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="联系人"
             app:shapeCorners="20dp"
             android:gravity="center"
@@ -278,7 +281,8 @@
         <com.tzh.baselib.shapeview.ShapeTextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="添加一条短信"
             app:shapeCorners="20dp"
             android:gravity="center"
@@ -328,7 +332,8 @@
         <com.tzh.baselib.shapeview.ShapeTextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="悬浮窗"
             app:shapeCorners="20dp"
             android:gravity="center"
@@ -344,7 +349,8 @@
         <com.tzh.baselib.shapeview.ShapeTextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="toXlsx"
             app:shapeCorners="20dp"
             android:gravity="center"
@@ -360,7 +366,8 @@
         <com.tzh.baselib.shapeview.ShapeTextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="壁纸"
             app:shapeCorners="20dp"
             android:gravity="center"
@@ -375,7 +382,8 @@
         <com.tzh.baselib.shapeview.ShapeTextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="AES加密"
             app:shapeCorners="20dp"
             android:gravity="center"
@@ -390,7 +398,8 @@
         <com.tzh.baselib.shapeview.ShapeTextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="去选择文件"
             app:shapeCorners="20dp"
             android:gravity="center"
@@ -405,7 +414,8 @@
         <com.tzh.baselib.shapeview.ShapeTextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="申请权限"
             app:shapeCorners="20dp"
             android:gravity="center"
@@ -418,5 +428,38 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <com.tzh.baselib.shapeview.ShapeTextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:text="指纹识别"
+            app:shapeCorners="20dp"
+            android:gravity="center"
+            app:shapeBackgroundColor="@color/color_00f3b8"
+            app:shapeBorderColor="@color/color_333"
+            app:shapeBorderWidth="1dp"
+            android:onClick="@{()->v.fingerprintUnlock()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.tzh.baselib.shapeview.ShapeTextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:text="手势解锁"
+            app:shapeCorners="20dp"
+            android:gravity="center"
+            app:shapeBackgroundColor="@color/color_00f3b8"
+            app:shapeBorderColor="@color/color_333"
+            app:shapeBorderWidth="1dp"
+            android:onClick="@{()->v.gestureLock()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
     </LinearLayout>
 </layout>

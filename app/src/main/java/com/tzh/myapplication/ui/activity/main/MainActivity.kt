@@ -11,23 +11,15 @@ import android.os.Environment
 import android.provider.Settings
 import android.telephony.SmsManager
 import android.util.Log
-import android.view.View
-import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import com.liulishuo.okdownload.OkDownloadProvider.context
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
-import com.molihuan.pathselector.PathSelector
-import com.molihuan.pathselector.entity.FileBean
-import com.molihuan.pathselector.fragment.BasePathSelectFragment
-import com.molihuan.pathselector.listener.CommonItemListener
-import com.molihuan.pathselector.utils.MConstants
-import com.molihuan.pathselector.utils.Mtools
 import com.tzh.myapplication.R
 import com.tzh.myapplication.base.AppBaseActivity
 import com.tzh.myapplication.databinding.ActivityMainBinding
@@ -54,10 +46,10 @@ import com.tzh.myapplication.utils.xls.XlsxUtil
 import com.tzh.baselib.activity.tool.ScanUtilActivity
 import com.tzh.baselib.activity.tool.TranslateActivity
 import com.tzh.baselib.livedata.observeForeverNoBack
-import com.tzh.baselib.util.GsonUtil
-import com.tzh.baselib.util.permission.PermissionLauncher
+import com.tzh.baselib.util.lock.FingerprintUnlock
 import com.tzh.baselib.util.picture.PictureSelectorHelper
 import com.tzh.baselib.util.toDefault
+import com.tzh.myapplication.ui.activity.GestureLockActivity
 
 
 class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main) {
@@ -77,6 +69,20 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
 
     val mWindowUtil by lazy {
         WindowUtil(this)
+    }
+
+    val fingerprintUnlock by lazy {
+        FingerprintUnlock(this,object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                ToastUtil.show("指纹识别成功")
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                ToastUtil.show("指纹识别失败")
+            }
+        })
     }
 
     override fun initView() {
@@ -333,5 +339,19 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
                 add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
         }
+    }
+
+    /**
+     * 指纹解锁
+     */
+    fun fingerprintUnlock(){
+        fingerprintUnlock.startAuthentication()
+    }
+
+    /**
+     * 手势解锁
+     */
+    fun gestureLock(){
+        GestureLockActivity.start(this)
     }
 }

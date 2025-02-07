@@ -191,4 +191,10 @@
             <enum name="FILL" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="GestureLockView">
+        <attr name="gv_lock_color" format="color" />
+        <attr name="gv_unlock_color" format="color" />
+        <attr name="gv_liner_color" format="color" />
+    </declare-styleable>
 </resources>
