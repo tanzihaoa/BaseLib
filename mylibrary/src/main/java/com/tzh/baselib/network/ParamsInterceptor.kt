@@ -49,6 +49,7 @@ class ParamsInterceptor : Interceptor {
 
         val newRequest = newRequestBuild
             .addHeader("Accept", "application/json")
+            .addHeader("Content-Type", "application/json")
             .addHeader("Accept-Language", "zh")
             .build()
         val response = chain.proceed(newRequest)

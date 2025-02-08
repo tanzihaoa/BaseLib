@@ -25,7 +25,7 @@ class BaseNetWork : ObservableTransformer<Any?, Any?> {
 
     private fun initRetrofit() {
         val client: OkHttpClient.Builder = OkHttpClient.Builder()
-            .connectTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(ParamsInterceptor())
 
         client.proxy(Proxy.NO_PROXY)
@@ -50,7 +50,7 @@ class BaseNetWork : ObservableTransformer<Any?, Any?> {
 
         fun getRetrofit(baseUrl: String): Retrofit {
             val client: OkHttpClient.Builder = OkHttpClient.Builder()
-                .connectTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(ParamsInterceptor())
 
 //            client.proxy(Proxy.NO_PROXY)

@@ -7,7 +7,7 @@ class TranslateUtil {
     companion object{
         const val appId = "20231213001909212"
 
-        const val key = "5cnWoa6Rj1YccYMQFL1_"
+        const val key = "3sP_esSnkKdhUM4QVkE8"
 
         //数字
         const val num = "0123456789"

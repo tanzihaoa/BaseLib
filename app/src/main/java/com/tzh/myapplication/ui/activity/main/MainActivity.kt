@@ -20,6 +20,7 @@ import com.liulishuo.okdownload.OkDownloadProvider.context
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
+import com.tzh.baselib.activity.tool.DeepSeekActivity
 import com.tzh.myapplication.R
 import com.tzh.myapplication.base.AppBaseActivity
 import com.tzh.myapplication.databinding.ActivityMainBinding
@@ -150,15 +151,6 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
         ContactsActivity.start(this)
     }
 
-    fun getUrl(): String {
-        val list: MutableMap<String, String> = HashMap()
-        list["用户名"] = "15197841559"
-        list["APP名称"] = getString(R.string.app_name)
-        list["手机"] = Build.BRAND
-        val mUrl = "https://article.uubook.cn/chat.html??channelId=oF21cA"
-        return mUrl + "&customer=" + com.tzh.baselib.util.GsonUtil.GsonString(list)
-    }
-
     /**
      * 扫码
      */
@@ -277,15 +269,7 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
      * 导出数据为xlsx表
      */
     fun toXls(){
-        XlsxUtil.toXlsx(this, mutableListOf<MyBean>().apply {
-            add(MyBean(1,"20","2024-07-27","2024-07-27"))
-            add(MyBean(2,"20","2024-07-27","2024-07-27"))
-            add(MyBean(3,"20","2024-07-27","2024-07-27"))
-            add(MyBean(4,"20","2024-07-27","2024-07-27"))
-            add(MyBean(5,"20","2024-07-27","2024-07-27"))
-            add(MyBean(6,"20","2024-07-27","2024-07-27"))
-            add(MyBean(7,"20","2024-07-27","2024-07-27"))
-        })
+        DeepSeekActivity.start(this)
     }
 
     /**

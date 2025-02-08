@@ -16,6 +16,15 @@ open class LibBaseResDto<T>() {
      */
     var error_msg: String? = null
 
+    /**
+     * deepSeek 返回类型
+     */
+    var id : String ?= null
+
+    /**
+     * deepSeek 返回数据
+     */
+    var choices : MutableList<T> ?= null
 
     fun getDataDto(): T {
         return trans_result ?: throw  RuntimeException("服务器数据异常")
