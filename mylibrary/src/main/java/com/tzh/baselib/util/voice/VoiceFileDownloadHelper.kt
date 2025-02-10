@@ -141,7 +141,7 @@ class VoiceFileDownloadHelper(var context : Context) {
      */
     fun getVoiceCacheFolder(): File? {
         val file = context.applicationContext.getExternalFilesDir("mVoice/")
-        com.tzh.baselib.util.AppPathManager.ifFolderExit(file?.absolutePath)
+        AppPathManager.ifFolderExit(file?.absolutePath)
         return file
     }
 

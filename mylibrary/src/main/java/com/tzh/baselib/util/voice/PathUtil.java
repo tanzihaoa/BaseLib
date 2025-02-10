@@ -32,4 +32,16 @@ public class PathUtil {
         AppPathManager.ifFolderExit(file.getAbsolutePath());
         return file;
     }
+
+    /**
+     * 获取存储xml文件夹
+     * @param context 上下文
+     * @return
+     */
+    public static File getTessData(Context context) {
+        File file = context.getExternalFilesDir("tessdata/");
+        assert file != null;
+        AppPathManager.ifFolderExit(file.getAbsolutePath());
+        return file;
+    }
 }
