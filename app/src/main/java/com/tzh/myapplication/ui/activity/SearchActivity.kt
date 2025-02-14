@@ -1,6 +1,7 @@
 package com.tzh.myapplication.ui.activity
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Handler
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
@@ -35,7 +36,11 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding>(R.layout.activity_
         })
 
         val handler = Handler()
-        val observer = ScreenshotObserver(handler, this)
+        val observer = ScreenshotObserver(handler, this,object : ScreenshotObserver.ImageListener{
+            override fun image(bitmap: Bitmap) {
+                binding.ivImage.setImageBitmap(bitmap)
+            }
+        })
         contentResolver.registerContentObserver(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             true,

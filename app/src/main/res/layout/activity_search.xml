@@ -30,5 +30,10 @@
             app:sv_no_input_hint_text="请输入搜索内容"
             app:sv_input_max_length="20"
             app:sv_hint="账号/手机号"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </layout>

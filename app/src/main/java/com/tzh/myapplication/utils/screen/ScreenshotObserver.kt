@@ -3,18 +3,15 @@ package com.tzh.myapplication.utils.screen
 import android.content.Context
 import android.database.ContentObserver
 import android.database.Cursor
-import android.graphics.BitmapFactory
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Handler
 import android.provider.MediaStore
-import com.googlecode.tesseract.android.TessBaseAPI
 import com.tzh.baselib.util.LogUtils
 import com.tzh.baselib.util.toDefault
-import com.tzh.baselib.util.voice.PathUtil
-import com.tzh.myapplication.base.MyApplication
 
 
-class ScreenshotObserver(handler: Handler, context: Context) : ContentObserver(handler) {
+class ScreenshotObserver(handler: Handler, context: Context,val listener : ImageListener) : ContentObserver(handler) {
     private val context: Context
 
     init {
@@ -26,10 +23,10 @@ class ScreenshotObserver(handler: Handler, context: Context) : ContentObserver(h
         if(uri != null){
             val screenshotPath = getScreenshotPath(uri)
             LogUtils.e("截屏====",screenshotPath.toDefault(""))
-            if (screenshotPath?.contains("screenshot",true).toDefault(false)) {
+            if (screenshotPath?.contains("Screenshot",true).toDefault(false)) {
                 // 检测到截屏
                 LogUtils.e("截屏====","检测到截屏")
-                screenshotPath?.let { processScreenshot(it) }
+                screenshotPath?.let { ImageProcess().processScreenshot(it,listener) }
             }
         }
     }
@@ -47,14 +44,8 @@ class ScreenshotObserver(handler: Handler, context: Context) : ContentObserver(h
         return null
     }
 
-    private fun processScreenshot(screenshotPath: String) {
-        val bitmap = BitmapFactory.decodeFile(screenshotPath)
-        val tessBaseAPI = TessBaseAPI()
-        tessBaseAPI.init(PathUtil.getTessData(MyApplication.mContext).absolutePath, "eng")
-        tessBaseAPI.setImage(bitmap)
-        val result = tessBaseAPI.utF8Text
-        tessBaseAPI.end()
-        LogUtils.e("解析结果====",result)
+    interface ImageListener{
+        fun image(bitmap : Bitmap)
     }
 
 }

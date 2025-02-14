@@ -108,5 +108,5 @@ dependencies {
 
     api 'androidx.cardview:cardview:1.0.0'
 
-    api 'androidx.biometric:biometric:1.2.0-alpha03' // 生物识别库
+    api 'androidx.biometric:biometric:1.2.0-alpha05' // 生物识别库
 }

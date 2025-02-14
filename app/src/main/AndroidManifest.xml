@@ -71,7 +71,9 @@
         <meta-data
             android:name="TD_CHANNEL_ID"
             android:value="debug" />
-
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr" />
         <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="UMENG_CHANNEL"
