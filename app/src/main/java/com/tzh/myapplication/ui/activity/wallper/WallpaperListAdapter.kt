@@ -13,7 +13,7 @@ import com.tzh.baselib.util.toDefault
 class WallpaperListAdapter : XRvBindingPureDataAdapter<WallpaperInfo>(R.layout.adapter_wallpaper_list){
     override fun onBindViewHolder(holder: XRvBindingHolder, position: Int, data: WallpaperInfo) {
         holder.getBinding<AdapterWallpaperListBinding>().run {
-            com.tzh.baselib.util.LoadImageUtil.loadImageUrl(this.ivImage,data.thumbnail.toDefault("ic_launcher"),8f)
+            LoadImageUtil.loadImageUrl(this.ivImage,data.thumbnail.toDefault("ic_launcher"),8f)
 
         }
     }

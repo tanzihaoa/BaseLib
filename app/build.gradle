@@ -108,6 +108,5 @@ dependencies {
 
     implementation "com.gengqiquan:httputil:1.0.5"
 
-    implementation 'com.google.mlkit:text-recognition:16.0.1' // 通用文字识别
-    implementation 'com.google.mlkit:text-recognition-chinese:16.0.1' // 中文增强
+    implementation 'com.rmtheis:tess-two:9.1.0'
 }
