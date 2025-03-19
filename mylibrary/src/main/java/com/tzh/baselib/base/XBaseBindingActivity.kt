@@ -28,13 +28,8 @@ abstract class XBaseBindingActivity<B : ViewDataBinding>(@LayoutRes LayoutId: In
     }
 
     open fun init() {
-        try {
-            initView()
-            initData()
-        } catch (e: Exception) {
-            Log.e("日志", "初始化失败")
-            e.printStackTrace()
-        }
+        initView()
+        initData()
     }
 
     protected abstract fun initView()
