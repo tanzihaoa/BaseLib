@@ -29,8 +29,6 @@ allprojects {
 
         maven { url 'https://gitee.com/YuanArcheanNovice/archean_android_lib/raw/master/maven' }
 
-        maven { url "https://nexus-sdk.cm253.com/repository/maven-public/" }
-
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 
         maven { url 'https://repo1.maven.org/maven2/' }
