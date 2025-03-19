@@ -1,6 +1,5 @@
 package com.tzh.baselib.base
 
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity

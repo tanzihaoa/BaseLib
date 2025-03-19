@@ -72,7 +72,7 @@ dependencies {
     api 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
 
     api 'com.alipay.sdk:alipaysdk-android:15.8.17@aar'
-    api 'com.tencent.mm.opensdk:wechat-sdk-android:+'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android:6.8.30'
 
     api 'com.guolindev.permissionx:permissionx:1.6.4'
 
