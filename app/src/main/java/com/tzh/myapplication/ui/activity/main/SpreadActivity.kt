@@ -12,7 +12,7 @@ import com.tzh.baselib.util.LoadImageUtil
  */
 class SpreadActivity : AppBaseActivity<ActivitySpreadBinding>(R.layout.activity_spread) {
     override fun initView() {
-        com.tzh.baselib.util.LoadImageUtil.loadImageUrl(binding.ivLogo, R.mipmap.ic_launcher,8f)
+        LoadImageUtil.loadImageUrl(binding.ivLogo, R.mipmap.ic_launcher,8f)
         binding.root.postDelayed({
             toHome()
         },1000)
