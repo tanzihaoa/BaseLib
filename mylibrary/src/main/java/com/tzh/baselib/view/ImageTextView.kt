@@ -131,6 +131,8 @@ class ImageTextView @JvmOverloads constructor(
 
         val textIsBold = typedArray.getBoolean(R.styleable.ImageTextView_itvTextIsBold, false)
 
+        val isClick = typedArray.getBoolean(R.styleable.ImageTextView_itvIsClick, true)
+
         //显示图片的位置
         val rightShowView = typedArray.getInt(R.styleable.ImageTextView_itvShowLocal, TO_TEXT_RIGHT)
         typedArray.recycle()
@@ -152,8 +154,10 @@ class ImageTextView @JvmOverloads constructor(
 
         setShowLocal(rightShowView)
 
-        setOnClickListener {
-            isSelected = !isSelected
+        if(isClick){
+            setOnClickListener {
+                isSelected = !isSelected
+            }
         }
     }
 

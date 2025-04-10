@@ -32,16 +32,6 @@ abstract class AppBaseActivity<B : ViewDataBinding>(@LayoutRes LayoutId: Int = 0
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        LogUtils.e(TAG,"onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        LogUtils.e(TAG,"onPause")
-    }
-
     override fun onCloseActivity() {
         hideSoftKeyBoard()
         ImmersionBar.with(this).reset()

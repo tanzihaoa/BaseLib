@@ -215,7 +215,9 @@ class XAppTitleBar @JvmOverloads constructor(
         }
         //设置默认的返回按钮事件
         mBackIv?.setOnClickListener {
-            (context as? Activity)?.onBackPressed()
+            if(backIconIsShow){
+                (context as? Activity)?.onBackPressed()
+            }
         }
     }
 

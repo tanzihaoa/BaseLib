@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Rect
+import android.os.Build
+import android.os.Environment
 import android.os.Looper
 import android.os.MessageQueue
 import android.util.TypedValue
@@ -15,8 +17,11 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.regex.Pattern
 
 object AppKtx {
@@ -272,8 +277,13 @@ fun String.divideMessageArray() : ArrayList<String>{
 fun MutableList<String>.checkPhonePermission(context: Context): Boolean {
     //验证是否许可权限
     for (permission in this) {
-        if (context.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+        val permissionCode  = ContextCompat.checkSelfPermission(context,permission)
+        if (permissionCode != PackageManager.PERMISSION_GRANTED) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()){
+                return true
+            }
             //没有这个权限
+            LogUtils.e("没有这个权限====",permission + "======" +permissionCode)
             return false
         }
     }
@@ -298,4 +308,78 @@ fun MutableList<String>.checkPhonePermissionType(activity : Activity): Int {
         }
     }
     return 0
+}
+
+/**
+ * 获取文件名的后缀
+ */
+fun String.getSuffixName() : String{
+    if(this.contains(".") && this.indexOf(".") < this.length -1){
+        return this.substring(this.indexOf(".") + 1)
+    }
+
+    return this
+}
+
+/**
+ * 获取文件名的名字
+ */
+fun String.getFileName() : String{
+    if(this.contains(".") && this.indexOf(".") < this.length -1){
+        return this.substring(0,this.indexOf("."))
+    }
+
+    return this
+}
+
+/**
+ * 时间戳转时分秒
+ */
+fun Long.toTime() : String{
+    //秒
+    val second = this / 1000 % 60
+    //分
+    val minute = this / 1000 / 60 % 60
+    //时
+    val hour = this / 1000 / 60 / 60 % 60
+    var time = ""
+    if(hour > 0){
+        time += if(hour>=10) hour.toString() else "0$hour"
+        time += ":"
+    }
+
+    time += if(minute>=10) minute.toString() else "0$minute"
+    time += ":"
+    time += if(second>=10) second.toString() else "0$second"
+
+    return time
+}
+
+/**
+ * 获取大小
+ */
+fun Long.getSize() : String{
+    val size = this / 1000
+
+    if(size > 1000 * 1000){
+        return (size / 1000 * 1000f).numFloatReplace(1).toString() + "GB"
+    }else if(size > 1000){
+        return (size / 1000f).numFloatReplace(1).toString() + "MB"
+    }else{
+        return size.toString() + "KB"
+    }
+}
+
+/**
+ * float四舍五入保留两位小数
+ * @param round 保留的小数位数
+ */
+fun Float.numFloatReplace(round : Int = 2) : Float{
+    return try {
+        var bd: BigDecimal = BigDecimal.valueOf(this.toDouble())
+        bd = bd.setScale(round, RoundingMode.HALF_UP)
+        bd.toFloat()
+    }catch (e : Exception){
+        this
+    }
 }

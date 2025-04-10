@@ -109,4 +109,6 @@ dependencies {
     implementation "com.gengqiquan:httputil:1.0.5"
 
     implementation 'com.rmtheis:tess-two:9.1.0'
+
+    implementation 'com.arthenica:ffmpeg-kit-full-gpl:6.0-2'
 }
