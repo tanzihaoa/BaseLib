@@ -107,4 +107,6 @@ dependencies {
     implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
 
     implementation 'com.rmtheis:tess-two:9.1.0'
+
+    implementation 'com.arthenica:ffmpeg-kit-full-gpl:6.0-2'
 }

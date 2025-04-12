@@ -11,7 +11,6 @@ import com.tzh.baselib.util.LogUtils
 import com.tzh.baselib.util.gradDivider
 import com.tzh.baselib.util.grid
 import com.tzh.baselib.util.initAdapter
-import com.tzh.baselib.util.toDefault
 
 /**
  * 分类 fragment

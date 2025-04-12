@@ -102,6 +102,8 @@
         <attr name="itvText" format="string" />
         <!--文字是否加粗-->
         <attr name="itvTextIsBold" format="boolean" />
+        <!--是否需要点击时间-->
+        <attr name="itvIsClick" format="boolean" />
 
 
         <!--右边显示的控件-->

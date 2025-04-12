@@ -78,6 +78,38 @@ object PermissionDetectionUtil {
         })
     }
 
+    fun getFilePermission(activity: AppCompatActivity,listener : DetectionListener){
+        if(getFilePermissions().checkPhonePermission(activity)){
+            //有这个权限
+            listener.ok()
+        } else {
+            //没有这个权限
+            HintDialog(activity,object : HintDialog.HintDialogListener{
+                override fun cancel() {
+
+                }
+
+                override fun ok() {
+                    getPermission(activity,getFilePermissions(),listener)
+                }
+            }).show("该功能需要获取手机存储读取权限用于选择本地文件，是否继续?","获取","取消")
+        }
+    }
+
+    /**
+     * 选择文件所需权限
+     */
+    fun getFilePermissions(): MutableList<String> {
+        return mutableListOf<String>().apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                add(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+            } else {
+                add(Manifest.permission.READ_EXTERNAL_STORAGE)
+                add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+        }
+    }
+
     interface DetectionListener{
         fun ok()
     }

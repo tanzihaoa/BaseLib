@@ -9,7 +9,6 @@ import com.tzh.myapplication.ui.adapter.ContactsAdapter
 import com.tzh.myapplication.ui.dto.UserDto
 import com.tzh.baselib.util.initAdapter
 import com.tzh.baselib.util.linear
-import java.util.Collections
 
 /**
  * 联系人页面

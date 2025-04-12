@@ -51,6 +51,7 @@ import com.tzh.baselib.util.lock.FingerprintUnlock
 import com.tzh.baselib.util.picture.PictureSelectorHelper
 import com.tzh.baselib.util.toDefault
 import com.tzh.myapplication.ui.activity.GestureLockActivity
+import com.tzh.myapplication.ui.activity.tool.SelectAudioOrVideoActivity
 
 
 class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main) {
@@ -210,30 +211,7 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
      * 添加一条短信
      */
     fun addMessage(){
-        val smsManager: SmsManager = SmsManager.getDefault()
-        val phoneNumber = "15197841559"
-        val message = "要发送的短信内容"
 
-        smsManager.sendTextMessage(phoneNumber, null, message, null, null)
-
-        val values = ContentValues()
-        values.put("address", phoneNumber)
-        values.put("body", message)
-        context.contentResolver.insert(Uri.parse("content://sms/sent"), values)
-
-        val notificationManager = NotificationManagerCompat.from(context)
-
-        val builder: NotificationCompat.Builder = NotificationCompat.Builder(context, "channel_id")
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("新短信发送成功")
-            .setContentText("短信内容：$message")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-
-            return
-        }
-        notificationManager.notify(1006, builder.build())
     }
 
     /**
@@ -337,5 +315,12 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
      */
     fun gestureLock(){
         GestureLockActivity.start(this)
+    }
+
+    /**
+     * 选择音视频
+     */
+    fun selectAudioOrVideo(type : String){
+        SelectAudioOrVideoActivity.start(this,type,true)
     }
 }
