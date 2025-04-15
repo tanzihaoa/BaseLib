@@ -26,7 +26,7 @@ class GyroscopeManager : SensorEventListener {
             sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         }
         sensorManager?.let {
-            val mSensor: Sensor = it.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+            val mSensor: Sensor? = it.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
             it.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_FASTEST)
             endTimestamp = 0
             angleX = 0.0

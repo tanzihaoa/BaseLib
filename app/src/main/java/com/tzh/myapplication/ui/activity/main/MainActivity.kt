@@ -48,6 +48,7 @@ import com.tzh.baselib.activity.tool.ScanUtilActivity
 import com.tzh.baselib.activity.tool.TranslateActivity
 import com.tzh.baselib.livedata.observeForeverNoBack
 import com.tzh.baselib.util.lock.FingerprintUnlock
+import com.tzh.baselib.util.permission.PermissionLauncher
 import com.tzh.baselib.util.picture.PictureSelectorHelper
 import com.tzh.baselib.util.toDefault
 import com.tzh.myapplication.ui.activity.GestureLockActivity
@@ -270,7 +271,7 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun permission(){
-        com.tzh.baselib.util.permission.PermissionLauncher()
+        PermissionLauncher()
             .with(this) //this可以是androidx.fragment.app.Fragment或者androidx.fragment.app.FragmentActivity
             .granted {
                 Log.e("======","已经获得权限")

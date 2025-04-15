@@ -44,7 +44,7 @@ object PermissionXUtil {
      * 获取录音权限
      */
     @JvmStatic
-    fun requestRecordPermission(activity: AppCompatActivity?=null,callBack: OnPermissionCallBackListener?= null) {
+    fun requestRecordPermission(activity: AppCompatActivity,callBack: OnPermissionCallBackListener?= null) {
         requestPermission(activity, mutableListOf<String>().apply {
            add(PERMISSION_AUDIO)
         }, callBack)
@@ -54,7 +54,7 @@ object PermissionXUtil {
      * 获取文件权限
      */
     @JvmStatic
-    fun requestStoragePermission(fragment: Fragment?=null,callBack: OnPermissionCallBackListener?=null) {
+    fun requestStoragePermission(fragment: Fragment,callBack: OnPermissionCallBackListener?=null) {
         requestPermission(fragment, mutableListOf<String>().apply {
             add(PERMISSION_STORAGE)
         }, callBack)
@@ -64,7 +64,7 @@ object PermissionXUtil {
      * 获取文件权限
      */
     @JvmStatic
-    fun requestStoragePermission(activity: AppCompatActivity?=null,callBack: OnPermissionCallBackListener?= null) {
+    fun requestStoragePermission(activity: AppCompatActivity,callBack: OnPermissionCallBackListener?= null) {
         requestPermission(activity, mutableListOf<String>().apply {
             add(PERMISSION_STORAGE)
         }, callBack)
@@ -74,7 +74,7 @@ object PermissionXUtil {
      * 获取相机权限
      */
     @JvmStatic
-    fun requestCameraPermission(fragment: Fragment?=null,callBack: OnPermissionCallBackListener?=null) {
+    fun requestCameraPermission(fragment: Fragment,callBack: OnPermissionCallBackListener?=null) {
         requestPermission(fragment, mutableListOf<String>().apply {
             add(PERMISSION_CAMERA)
         }, callBack)
@@ -84,7 +84,7 @@ object PermissionXUtil {
      * 获取相机权限
      */
     @JvmStatic
-    fun requestCameraPermission(activity: AppCompatActivity?=null,callBack: OnPermissionCallBackListener?= null) {
+    fun requestCameraPermission(activity: AppCompatActivity,callBack: OnPermissionCallBackListener?= null) {
         requestPermission(activity, mutableListOf<String>().apply {
             add(PERMISSION_CAMERA)
         }, callBack)
@@ -94,7 +94,7 @@ object PermissionXUtil {
      * 获取日历权限
      */
     @JvmStatic
-    fun requestCalendarPermission(fragment: Fragment?=null,callBack: OnPermissionCallBackListener?=null) {
+    fun requestCalendarPermission(fragment: Fragment,callBack: OnPermissionCallBackListener?=null) {
         fragment?:return
         requestPermission(fragment, mutableListOf<String>().apply {
             add(PERMISSION_CALENDAR_WRITE)
@@ -106,7 +106,7 @@ object PermissionXUtil {
      * 获取日历权限
      */
     @JvmStatic
-    fun requestCalendarPermission(activity: AppCompatActivity?=null,callBack: OnPermissionCallBackListener?= null) {
+    fun requestCalendarPermission(activity: AppCompatActivity,callBack: OnPermissionCallBackListener?= null) {
         requestPermission(activity, mutableListOf<String>().apply {
             add(PERMISSION_CALENDAR_WRITE)
             add(PERMISSION_CALENDAR_READ)
@@ -117,7 +117,7 @@ object PermissionXUtil {
      * 获取所有权限
      */
     @JvmStatic
-    fun requestAllPermission(activity: AppCompatActivity?=null,callBack: OnPermissionCallBackListener?= null) {
+    fun requestAllPermission(activity: AppCompatActivity,callBack: OnPermissionCallBackListener?= null) {
         requestPermission(activity, mutableListOf<String>().apply {
             add(PERMISSION_STORAGE)
             add(PERMISSION_CAMERA)
@@ -129,7 +129,7 @@ object PermissionXUtil {
      * 获取相册权限，文件读写以及相机
      */
     @JvmStatic
-    fun requestPhotoPermission(activity: AppCompatActivity?=null,callBack: OnPermissionCallBackListener?= null) {
+    fun requestPhotoPermission(activity: AppCompatActivity,callBack: OnPermissionCallBackListener?= null) {
         requestPermission(activity, mutableListOf<String>().apply {
             add(PERMISSION_STORAGE)
             add(PERMISSION_CAMERA)
@@ -140,7 +140,7 @@ object PermissionXUtil {
      * 获取某一个权限
      */
     @JvmStatic
-    fun requestAnyPermission(activity: AppCompatActivity?=null,permission : String,callBack: OnPermissionCallBackListener?= null) {
+    fun requestAnyPermission(activity: AppCompatActivity,permission : String,callBack: OnPermissionCallBackListener?= null) {
         requestPermission(activity, mutableListOf<String>().apply {
             add(permission)
         }, callBack)
@@ -150,7 +150,7 @@ object PermissionXUtil {
      * 获取多个个权限
      */
     @JvmStatic
-    fun requestAnyPermission(activity: AppCompatActivity?=null, permission : MutableList<String>, callBack: OnPermissionCallBackListener?= null) {
+    fun requestAnyPermission(activity: AppCompatActivity, permission : MutableList<String>, callBack: OnPermissionCallBackListener?= null) {
         requestPermission(activity,permission, callBack)
     }
 
@@ -158,7 +158,7 @@ object PermissionXUtil {
      * 获取某一个权限
      */
     @JvmStatic
-    fun requestAnyPermission(activity: Fragment?=null,permission : String,callBack: OnPermissionCallBackListener?= null) {
+    fun requestAnyPermission(activity: Fragment,permission : String,callBack: OnPermissionCallBackListener?= null) {
         requestPermission(activity, mutableListOf<String>().apply {
             add(permission)
         }, callBack)
@@ -168,11 +168,11 @@ object PermissionXUtil {
      * 获取多个个权限
      */
     @JvmStatic
-    fun requestAnyPermission(activity: Fragment?=null, permission : MutableList<String>, callBack: OnPermissionCallBackListener?= null) {
+    fun requestAnyPermission(activity: Fragment, permission : MutableList<String>, callBack: OnPermissionCallBackListener?= null) {
         requestPermission(activity,permission, callBack)
     }
 
-    private fun requestPermission(activity: AppCompatActivity?=null, permission: MutableList<String>, callBack: OnPermissionCallBackListener?= null){
+    private fun requestPermission(activity: AppCompatActivity, permission: MutableList<String>, callBack: OnPermissionCallBackListener?= null){
         PermissionX.init(activity).permissions(permission).onExplainRequestReason { scope, deniedList ->
             val message = "需要您同意以下权限才能正常使用"
             scope.showRequestReasonDialog(deniedList, message, "确定", "取消")
@@ -187,7 +187,7 @@ object PermissionXUtil {
         }
     }
 
-    private fun requestPermission(activity: Fragment?=null, permission: MutableList<String>, callBack: OnPermissionCallBackListener?=null){
+    private fun requestPermission(activity: Fragment, permission: MutableList<String>, callBack: OnPermissionCallBackListener?=null){
         PermissionX.init(activity).permissions(permission).onExplainRequestReason { scope, deniedList ->
             val message = "需要您同意以下权限才能正常使用"
             scope.showRequestReasonDialog(deniedList, message, "确定", "取消")
