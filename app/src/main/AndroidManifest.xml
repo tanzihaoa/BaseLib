@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.tzh.myapplication">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -50,7 +55,7 @@
     <uses-permission android:name="android.permission.REORDER_TASKS"/>
 
     <application
-        android:name=".base.MyApplication"
+        android:name="com.tzh.myapplication.base.MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -118,33 +123,33 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.main.MainActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.main.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:launchMode="singleTask"
             android:exported="false"/>
 
-        <activity android:name=".ui.activity.ListActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.ListActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:exported="false"/>
 
-        <activity android:name=".ui.activity.ImageActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.ImageActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".ui.activity.CardActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.CardActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             tools:ignore="LockedOrientationActivity"  />
 
-        <activity android:name=".ui.activity.SendMessageActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.SendMessageActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             tools:ignore="LockedOrientationActivity"/>
 
-        <activity android:name=".ui.activity.SendSmsActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.SendSmsActivity"
             android:screenOrientation="portrait"
             android:exported="false">
             <!--region provides ongoing call UI必须有，否则调不起设置默认电话-->
@@ -160,59 +165,59 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.HandSendMessageActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.HandSendMessageActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".ui.activity.SearchActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             tools:ignore="LockedOrientationActivity"/>
 
-        <activity android:name=".ui.activity.ContactsActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.ContactsActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             tools:ignore="LockedOrientationActivity" />
 
-        <activity android:name=".ui.activity.CallActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.CallActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleInstance"
             android:exported="true"
             tools:ignore="LockedOrientationActivity"  />
 
-        <activity android:name=".ui.activity.wallper.WallPaperActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.wallper.WallPaperActivity"
             android:screenOrientation="portrait"
             android:exported="true"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".ui.activity.main.SelectFileActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.main.SelectFileActivity"
             android:screenOrientation="portrait"
             android:exported="true"
             tools:ignore="LockedOrientationActivity"/>
 
-        <activity android:name=".ui.activity.encipher.EncipherActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.encipher.EncipherActivity"
             android:screenOrientation="portrait"
             android:exported="true"
             tools:ignore="LockedOrientationActivity"/>
 
-        <activity android:name=".ui.activity.GestureLockActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.GestureLockActivity"
             android:screenOrientation="portrait"
             android:exported="true"
             tools:ignore="LockedOrientationActivity"/>
 
-        <activity android:name=".ui.activity.tool.SelectAudioOrVideoActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.tool.SelectAudioOrVideoActivity"
             android:screenOrientation="portrait"
             android:exported="true"
             tools:ignore="LockedOrientationActivity"/>
 
-        <activity android:name=".ui.activity.tool.AudioConvertActivity"
+        <activity android:name="com.tzh.myapplication.ui.activity.tool.AudioConvertActivity"
             android:screenOrientation="portrait"
             android:exported="true"
             tools:ignore="LockedOrientationActivity"/>
 
-        <service android:name=".service.AutoBillService" />
+        <service android:name="com.tzh.myapplication.service.AutoBillService" />
         <service
-            android:name=".service.SkAccessibilityService"
+            android:name="com.tzh.myapplication.service.SkAccessibilityService"
             android:enabled="true"
             android:exported="true"
             android:label="自动记账"
@@ -226,7 +231,7 @@
                 android:resource="@xml/config_accessibility" />
         </service>
 
-        <service android:name=".service.MessageService"
+        <service android:name="com.tzh.myapplication.service.MessageService"
             android:label="@string/app_name"
             android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE"
             android:exported="true">
@@ -245,7 +250,7 @@
         </service>
 
         <receiver
-            android:name=".service.SmsSentReceiver"
+            android:name="com.tzh.myapplication.service.SmsSentReceiver"
             android:permission="android.permission.BROADCAST_SMS"
             android:exported="true">
             <intent-filter android:priority="2147483647">
@@ -255,7 +260,7 @@
         </receiver>
 
         <receiver
-            android:name=".service.MmsSentReceiver"
+            android:name="com.tzh.myapplication.service.MmsSentReceiver"
             android:permission="android.permission.BROADCAST_WAP_PUSH"
             android:exported="true">
             <intent-filter>
@@ -274,7 +279,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <receiver android:name=".service.auto.Helper.broadcast.NotificationClickReceiver" /> <!-- 无障碍开机启动广播 -->
+        <receiver android:name="com.tzh.myapplication.service.auto.Helper.broadcast.NotificationClickReceiver" /> <!-- 无障碍开机启动广播 -->
     </application>
 
 </manifest>

@@ -4,7 +4,6 @@ import android.content.Context
 import com.tzh.myapplication.R
 import com.tzh.myapplication.databinding.DialogAddMobileBinding
 import com.tzh.baselib.base.BaseBindingDialog
-import com.tzh.myapplication.databinding.DialogMyBinding
 import com.tzh.myapplication.utils.ToastUtil
 import com.tzh.baselib.util.isMobile
 import com.tzh.baselib.util.setOnClickNoDouble
