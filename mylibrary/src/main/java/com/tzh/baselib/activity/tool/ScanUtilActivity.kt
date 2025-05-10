@@ -48,10 +48,6 @@ class ScanUtilActivity : XBaseBindingActivity<ActivityScanUtilBinding>(R.layout.
         }
     }
 
-    override fun onCloseActivity() {
-
-    }
-
     interface ScanListener{
         fun sure(text : String)
 

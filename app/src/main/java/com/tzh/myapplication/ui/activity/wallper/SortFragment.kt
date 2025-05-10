@@ -51,10 +51,6 @@ class SortFragment : XBaseBindingFragment<FragmentSortBinding>(R.layout.fragment
 
     }
 
-    override fun onCloseFragment() {
-
-    }
-
     private fun getData(){
 
     }

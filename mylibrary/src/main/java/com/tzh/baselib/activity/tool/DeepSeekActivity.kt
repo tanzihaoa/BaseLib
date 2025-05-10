@@ -37,10 +37,6 @@ class DeepSeekActivity : XBaseBindingActivity<ActivityDeepSeekBinding>(R.layout.
 
     }
 
-    override fun onCloseActivity() {
-
-    }
-
     /**
      * 翻译
      */

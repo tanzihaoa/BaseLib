@@ -133,8 +133,4 @@ class PasswordGenerationActivity : XBaseBindingActivity<ActivityPasswordGenerati
     override fun initData() {
 
     }
-
-    override fun onCloseActivity() {
-
-    }
 }

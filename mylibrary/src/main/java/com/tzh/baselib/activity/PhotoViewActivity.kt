@@ -87,10 +87,6 @@ class PhotoViewActivity : XBaseBindingActivity<ActivityPhotoViewBinding>(R.layou
 
     }
 
-    override fun onCloseActivity() {
-
-    }
-
     private fun save(){
         PermissionXUtil.requestStoragePermission(this, object : OnPermissionCallBackListener {
             override fun onAgree() {

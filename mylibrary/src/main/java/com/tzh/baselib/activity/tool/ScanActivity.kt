@@ -65,11 +65,8 @@ class ScanActivity : XBaseBindingActivity<ActivityScanBinding>(R.layout.activity
 
     override fun onDestroy() {
         super.onDestroy()
-        capture?.onDestroy();
-    }
-
-
-    override fun onCloseActivity() {
+        capture?.onDestroy()
         ActivityCloseLiveData.instance.value = true
     }
+
 }

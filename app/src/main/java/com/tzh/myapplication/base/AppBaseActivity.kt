@@ -32,10 +32,4 @@ abstract class AppBaseActivity<B : ViewDataBinding>(@LayoutRes LayoutId: Int = 0
         }
     }
 
-    override fun onCloseActivity() {
-        hideSoftKeyBoard()
-        ImmersionBar.with(this).reset()
-    }
-
-
 }

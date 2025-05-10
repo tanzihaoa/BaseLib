@@ -110,10 +110,6 @@ class WebLibActivity : XBaseBindingActivity<ActivityWebViewLibBinding>(R.layout.
 
     }
 
-    override fun onCloseActivity() {
-
-    }
-
     var isLoadUrl = false
 
     class MyWebChromeClient(val activity : WebLibActivity, val progressBar : ProgressBar) : WebChromeClient() {

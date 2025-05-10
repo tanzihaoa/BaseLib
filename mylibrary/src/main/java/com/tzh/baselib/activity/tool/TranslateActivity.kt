@@ -48,10 +48,6 @@ class TranslateActivity : XBaseBindingActivity<ActivityTranslateBinding>(R.layou
 
     }
 
-    override fun onCloseActivity() {
-
-    }
-
     /**
      * 翻译
      */
