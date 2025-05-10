@@ -1,6 +1,5 @@
 package com.tzh.baselib.base
 
-import android.view.inputmethod.InputMethodManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -9,13 +8,6 @@ import androidx.databinding.ViewDataBinding
 abstract class XBaseBindingActivity<B : ViewDataBinding>(@LayoutRes LayoutId: Int = 0) : AppCompatActivity(LayoutId) {
 
     protected lateinit var binding: B
-    private var mInputMethodManager: InputMethodManager? = null
-
-    /**
-     * 是否关闭
-     */
-    private var isClose = false
-
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
@@ -33,29 +25,6 @@ abstract class XBaseBindingActivity<B : ViewDataBinding>(@LayoutRes LayoutId: In
 
     protected abstract fun initView()
     protected abstract fun initData()
-
-    /**
-     * 方法说明:手动释放内存
-     * 方法名称:releaseMemory
-     * 返回void
-     */
-    protected abstract fun onCloseActivity()
-
-    override fun onPause() {
-        if (isFinishing && !isClose) {
-            isClose = true
-            onCloseActivity()
-        }
-        super.onPause()
-    }
-
-    override fun onStop() {
-        if (isFinishing && !isClose) {
-            isClose = true
-            onCloseActivity()
-        }
-        super.onStop()
-    }
 
     override fun onDestroy() {
         XAppActivityManager.getInstance().removeActivity(this)

@@ -1,22 +1,17 @@
 package com.tzh.myapplication.ui.activity.main
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
-import android.telephony.SmsManager
 import android.util.Log
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricPrompt
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import com.liulishuo.okdownload.OkDownloadProvider.context
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
@@ -37,25 +32,32 @@ import com.tzh.myapplication.ui.activity.wallper.WallPaperActivity
 import com.tzh.myapplication.ui.dialog.AddMobileDialog
 import com.tzh.myapplication.ui.dialog.MyDialog
 import com.tzh.myapplication.utils.ConfigUtil
-import com.tzh.myapplication.utils.SkUtil
 import com.tzh.myapplication.utils.TimeUtil
 import com.tzh.myapplication.utils.ToastUtil
 import com.tzh.myapplication.utils.img.PermissionDetectionUtil
 import com.tzh.myapplication.utils.window.WindowUtil
-import com.tzh.myapplication.utils.xls.MyBean
-import com.tzh.myapplication.utils.xls.XlsxUtil
 import com.tzh.baselib.activity.tool.ScanUtilActivity
 import com.tzh.baselib.activity.tool.TranslateActivity
 import com.tzh.baselib.livedata.observeForeverNoBack
+import com.tzh.baselib.util.GsonUtil
+import com.tzh.baselib.util.LogUtils
 import com.tzh.baselib.util.lock.FingerprintUnlock
 import com.tzh.baselib.util.permission.PermissionLauncher
 import com.tzh.baselib.util.picture.PictureSelectorHelper
 import com.tzh.baselib.util.toDefault
+import com.tzh.myapplication.service.auto.AutoDataUtil.getApps
 import com.tzh.myapplication.ui.activity.GestureLockActivity
 import com.tzh.myapplication.ui.activity.tool.SelectAudioOrVideoActivity
+import com.tzh.myapplication.utils.AndroidUtil
+import com.ven.assists.AssistsCore
+import com.ven.assists.AssistsCore.getNodes
+import com.ven.assists.AssistsCore.logNode
+import com.ven.assists.AssistsCore.txt
+import com.ven.assists.service.AssistsService
+import com.ven.assists.service.AssistsServiceListener
 
 
-class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main), AssistsServiceListener {
 
     companion object{
         fun start(context: Context){
@@ -94,7 +96,11 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
         curSelDate = TimeUtil.getCurrentDate()
 
         binding.tvWza.setOnClickListener {
-            SkUtil.start(this)
+            if(!AndroidUtil.isIgnoringBatteryOptimizations(this)){
+                AndroidUtil.requestIgnoreBatteryOptimizations(this)
+            }else{
+                AssistsCore.openAccessibilitySetting()
+            }
         }
 
 
@@ -105,11 +111,9 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        binding.tvWza.text = if(SkUtil.isAccessibilitySettingsOn(this)) "已开启无障碍模式" else "未开启无障碍"
+        AssistsService.listeners.add(this)
+
     }
 
     override fun initData() {
@@ -323,5 +327,27 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
      */
     fun selectAudioOrVideo(type : String){
         SelectAudioOrVideoActivity.start(this,type,true)
+    }
+
+
+    override fun onAccessibilityEvent(accessibilityEvent: AccessibilityEvent) {
+        super.onAccessibilityEvent(accessibilityEvent)
+
+        var text = mutableListOf<String>()
+        accessibilityEvent.source?.getNodes()?.forEach {
+            if(it.txt().isNotEmpty()){
+                text.add(it.txt())
+            }
+        }
+        if(text.isNotEmpty()){
+            LogUtils.e("解析服务======", GsonUtil.GsonString(text))
+        }
+        LogUtils.e("className======",accessibilityEvent.className.toString())
+    }
+
+
+    override fun onServiceConnected(service: AssistsService) {
+//        onBackApp()
+        AssistsCore.getAllNodes().forEach { it.logNode() }
     }
 }

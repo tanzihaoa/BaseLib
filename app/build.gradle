@@ -118,4 +118,6 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite-gpu:2.8.0' // GPU加速
     implementation 'org.tensorflow:tensorflow-lite-support:0.1.0-rc1'
     implementation 'com.nex3z:finger-paint-view:0.1.0'
+
+    implementation 'com.github.ven-coder.Assists:assists-base:v3.2.15'
 }

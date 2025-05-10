@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.multidex.MultiDex
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.mmkv.MMKV
-import com.tzh.myapplication.service.auto.TaskThread
 import com.tzh.myapplication.utils.window.BaseActivityLifecycleCallbacks
 import com.tzh.baselib.view.load.AppLoadLayout
 import com.tzh.baselib.view.load.AppRefreshLayout
@@ -41,7 +40,6 @@ class MyApplication : Application() {
         mLifecycleCallbacks = BaseActivityLifecycleCallbacks()
         registerActivityLifecycleCallbacks(mLifecycleCallbacks)
         MMKV.initialize(this)
-        TaskThread.initThread(20)
     }
 
     /**
