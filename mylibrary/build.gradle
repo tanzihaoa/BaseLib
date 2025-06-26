@@ -86,11 +86,11 @@ dependencies {
     //时间选择器和选项选择器
     api 'com.contrarywind:Android-PickerView:4.1.9'
 
-    api 'com.github.angcyo.DslTablayout:TabLayout:3.5.3'
+    api 'com.github.angcyo.DslTablayout:TabLayout:3.7.1'
     //可选
-    api 'com.github.angcyo.DslTablayout:ViewPager1Delegate:3.5.3'
+    api 'com.github.angcyo.DslTablayout:ViewPager1Delegate:3.7.1'
     //可选
-    api 'com.github.angcyo.DslTablayout:ViewPager2Delegate:3.5.3'
+    api 'com.github.angcyo.DslTablayout:ViewPager2Delegate:3.7.1'
 
     //二维码扫描库
     api 'com.journeyapps:zxing-android-embedded:3.6.0'
