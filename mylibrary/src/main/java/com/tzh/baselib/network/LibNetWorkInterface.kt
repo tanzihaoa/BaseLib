@@ -2,6 +2,7 @@ package com.tzh.baselib.network
 
 import android.util.ArrayMap
 import com.tzh.baselib.dto.DeepSeekRequestDto
+import com.tzh.baselib.dto.DeepSeekResponseDto
 import com.tzh.baselib.dto.TranslateDto
 import io.reactivex.Observable
 import retrofit2.http.Body
@@ -21,5 +22,5 @@ interface LibNetWorkInterface {
      * AI
      */
     @POST("https://api.deepseek.com/chat/completions")
-    fun sendRequest(@Header("Authorization") apiKey : String,@Body request: DeepSeekRequestDto): Observable<LibBaseResDto<Any>>
+    fun sendRequest(@Header("Content-Type") type : String,@Header("Authorization") apiKey : String,@Body request: DeepSeekRequestDto): Observable<LibBaseResDto<DeepSeekResponseDto>>
 }

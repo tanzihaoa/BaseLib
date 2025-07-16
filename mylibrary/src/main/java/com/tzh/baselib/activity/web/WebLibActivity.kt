@@ -207,4 +207,12 @@ class WebLibActivity : XBaseBindingActivity<ActivityWebViewLibBinding>(R.layout.
             filePathCallback = null
         }
     }
+
+    override fun onBackPressed() {
+        if(binding.webBrowser.canGoBack()){
+            binding.webBrowser.goBack()
+        }else{
+            super.onBackPressed()
+        }
+    }
 }

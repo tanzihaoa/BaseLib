@@ -28,7 +28,7 @@ abstract class AppBaseActivity<B : ViewDataBinding>(@LayoutRes LayoutId: Int = 0
     open fun hideSoftKeyBoard() {
         val localView = currentFocus
         if (localView != null) {
-            mInputMethodManager.hideSoftInputFromWindow(localView.windowToken, 2)
+            mInputMethodManager.hideSoftInputFromWindow(localView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     }
 

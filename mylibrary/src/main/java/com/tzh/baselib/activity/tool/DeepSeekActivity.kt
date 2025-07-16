@@ -46,8 +46,13 @@ class DeepSeekActivity : XBaseBindingActivity<ActivityDeepSeekBinding>(R.layout.
         if(text.isEmpty()){
             Toast.makeText(this,"请输入要问的内容",Toast.LENGTH_LONG).show()
         }else{
+
             LibNetWorkApi.sendRequest(this,text).subscribe({
                 LogUtils.e("返回=====",GsonUtil.GsonString(it.choices))
+                if(it.choices?.size.toDefault(0) > 0){
+                    binding.etText2.setText(it.choices?.get(0)?.message?.content)
+                }
+
             },{
                 LogUtils.e("错误=====",GsonUtil.GsonString(it))
             })
