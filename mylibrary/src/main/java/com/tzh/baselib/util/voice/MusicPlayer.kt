@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
+import com.tzh.baselib.util.LogUtils
 import com.tzh.baselib.util.sound.VoiceFileDownloadHelper
 import com.tzh.baselib.util.toDefault
 import java.io.File
@@ -11,7 +12,7 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-class MusicPlayer(context: Context,val ok : (duration : Int) -> Unit = {}) {
+class MusicPlayer(context: Context,val ok : (duration : Int) -> Unit = {},val stop : () -> Unit = {}) {
 
     private val helper by lazy {
         VoiceFileDownloadHelper(context)
@@ -36,7 +37,10 @@ class MusicPlayer(context: Context,val ok : (duration : Int) -> Unit = {}) {
      * @param isLoop 是否循环播放
      */
     fun play(url : String,isLoop : Boolean){
+        LogUtils.e("===",url)
+        LogUtils.e("===",helper.getPath(url))
         if(helper.isHaveFile(url)){
+            LogUtils.e("=====","isHaveFile")
             playVoice(url,isLoop)
         }else{
             helper.onDownloadFile(url,url,object : VoiceFileDownloadHelper.OnDownloadListener() {
@@ -46,13 +50,16 @@ class MusicPlayer(context: Context,val ok : (duration : Int) -> Unit = {}) {
 
                 override fun onProgress(percent: String) {
                     //"下载中($percent%)"
+                    LogUtils.e("=====",percent.toString())
                 }
 
                 override fun onSuccess(file: File) {
+                    LogUtils.e("=====","onSuccess")
                     playVoice(url,isLoop)
                 }
 
                 override fun onError(throwable: Throwable) {
+                    LogUtils.e(throwable)
                     when(throwable){
                         is ConnectException, is NullPointerException, is SocketTimeoutException, is UnknownHostException -> {
                             //"网络错误"
@@ -71,7 +78,6 @@ class MusicPlayer(context: Context,val ok : (duration : Int) -> Unit = {}) {
         if(mediaPlayer == null){
             mediaPlayer = MediaPlayer()
         }
-
         if(mUrl == helper.getPath(url) && mediaPlayer!!.isPlaying){
             mediaPlayer?.pause()
             return
@@ -107,6 +113,8 @@ class MusicPlayer(context: Context,val ok : (duration : Int) -> Unit = {}) {
     }
 
     fun stop(){
+        stop.invoke()
+        handler.removeCallbacks(runnable)
         mUrl= ""
         isPause = false
         mediaPlayer?.stop()
@@ -122,6 +130,13 @@ class MusicPlayer(context: Context,val ok : (duration : Int) -> Unit = {}) {
             handler.postDelayed(this, 100)
             ok.invoke(currentPos.toDefault(0))
         }
+    }
+
+    /**
+     *
+     */
+    fun seekTo(duration: Int){
+        mediaPlayer?.seekTo(duration)
     }
 
     /**
@@ -144,6 +159,10 @@ class MusicPlayer(context: Context,val ok : (duration : Int) -> Unit = {}) {
             mediaPlayer?.start()
             handler.post(runnable)
         }
+    }
+
+    fun isPlay() : Boolean{
+        return mediaPlayer?.isPlaying.toDefault(false)
     }
 
     fun isPause() : Boolean{

@@ -1,19 +1,17 @@
 package com.tzh.myapplication.ui.activity.tool
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
+import android.widget.SeekBar
 import com.tzh.baselib.util.GsonUtil
 import com.tzh.baselib.util.audio.GetAudioOrVideoUtil
 import com.tzh.baselib.util.toDefault
-import com.tzh.baselib.util.voice.PathUtil
+import com.tzh.baselib.util.voice.MusicPlayer
 import com.tzh.myapplication.R
 import com.tzh.myapplication.base.AppBaseActivity
 import com.tzh.myapplication.databinding.ActivityAudioConvertBinding
-import com.tzh.myapplication.utils.ToastUtil
-import com.tzh.myapplication.utils.mask.MaskRegion
-import com.tzh.myapplication.utils.mask.MaskType
-import com.tzh.myapplication.utils.mask.VideoProcessor
+import com.tzh.myapplication.utils.VideoUtils
 
 /**
  * 音视频转换页面
@@ -37,46 +35,74 @@ class AudioConvertActivity : AppBaseActivity<ActivityAudioConvertBinding>(R.layo
         GsonUtil.GsonToList(intent.getStringExtra("file").toDefault("[]"),GetAudioOrVideoUtil.VideoFile::class.java)
     }
 
-    val videoProcessor by lazy {
-        VideoProcessor(this)
+    val mUrl = "https://appimg.yunxiaoguo.cn/video2sound_all/20250725/ad8d240f03d947128daa35c6d1bf7eb7_i0fe92cfa695b11f0b8ae5254004ec149_vocal.aac"
+
+    val duration by lazy {
+        VideoUtils.getVideoDuration(mUrl)
+    }
+
+    val audioPlayer by lazy {
+        MusicPlayer(this, ok = {
+            binding.seekBar.setProgress((it * 100f / duration).toInt())
+            binding.tvStart.text = formatTime(it.toFloat())
+        }, stop = {
+            binding.seekBar.setProgress(0)
+            binding.tvStart.text = "00:00"
+            binding.btnPlay.setImageResource(R.mipmap.icon_play)
+        })
     }
 
     override fun initView() {
         binding.activity = this
-        // 初始化视频处理器
-        val fileName = "合成视频_" + System.currentTimeMillis() + ".mp4"
+        binding.tvEnd.text = formatTime(duration.toFloat())
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                // 进度变化时调用
+                // fromUser 表示是否由用户拖动触发
+                if(fromUser){
+                    audioPlayer.seekTo(duration.toInt() / 100 * progress)
+                }
+            }
 
-        // 设置输入输出路径
-        val outputPath = PathUtil.getVideo(this).absolutePath + "/${fileName}"
-        videoProcessor.initProcessing(file[0].path, outputPath)
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // 用户开始拖动时调用
+            }
 
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // 用户停止拖动时调用
+            }
+        })
+
+        // 播放/暂停按钮
+        binding.btnPlay.setOnClickListener {
+            play()
+        }
     }
 
     override fun initData() {
 
     }
 
-    fun startConvert(){
-        // 定义遮罩区域
-        val maskRegions = listOf(
-            MaskRegion(
-                MaskType.MOSAIC,
-                Rect(40,40, 50, 50) // 马赛克区域
-            ),
-//            MaskRegion(
-//                MaskType.PIXELATE,
-//                Rect(50, 50, 200, 200) // 模糊区域
-//            )
-        )
-
-        // 开始处理
-        Thread {
-            videoProcessor.processFrames(maskRegions)
-            runOnUiThread {
-                // 处理完成，更新UI
-                ToastUtil.show("视频处理完成")
-            }
-        }.start()
+    fun play(){
+        if(audioPlayer.isPlay()){
+            binding.btnPlay.setImageResource(R.mipmap.icon_play)
+            audioPlayer.pause()
+        }else{
+            binding.btnPlay.setImageResource(R.mipmap.icon_stop)
+            audioPlayer.play(mUrl,false)
+        }
     }
 
+    @SuppressLint("DefaultLocale")
+    private fun formatTime(seconds: Float): String {
+        val totalSeconds = seconds.toInt()
+        val minutes = totalSeconds / 60 /1000
+        val remainingSeconds = totalSeconds / 1000 % 60
+        return String.format("%02d:%02d", minutes, remainingSeconds)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        audioPlayer.stop()
+    }
 }

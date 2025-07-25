@@ -10,6 +10,7 @@ import com.liulishuo.okdownload.core.cause.EndCause
 import com.liulishuo.okdownload.core.listener.DownloadListener4WithSpeed
 import com.liulishuo.okdownload.core.listener.assist.Listener4SpeedAssistExtend
 import com.tzh.baselib.util.AppPathManager
+import com.tzh.baselib.util.LogUtils
 import com.tzh.baselib.util.toDefault
 import java.io.File
 
@@ -35,12 +36,12 @@ class VoiceFileDownloadHelper(var context : Context) {
         if (url.isNullOrEmpty()) return
         getVoiceCacheFolder()?.let {
             if (!it.exists().toDefault(false) ) {
-                com.tzh.baselib.util.AppPathManager.ifFolderExit(it.absolutePath)
+                AppPathManager.ifFolderExit(it.absolutePath)
             }
             if (saveFileName.isNullOrEmpty()) return
 
-            var saveName = saveFileName.substring(url.lastIndexOf("/")+1)
-            saveName = if(saveName.indexOf(FILE_OK)>0)saveName.replace(FILE_OK,FILE_TMP) else saveName + FILE_TMP
+            var saveName = getName(saveFileName)
+            saveName = if(isVoice(saveName))saveName.replace(FILE_OK,FILE_TMP) else saveName + FILE_TMP
 
             if (downloadTask != null && StatusUtil.getStatus(downloadTask!!) == StatusUtil.Status.RUNNING) {
                 return
@@ -140,21 +141,36 @@ class VoiceFileDownloadHelper(var context : Context) {
      */
     fun getVoiceCacheFolder(): File? {
         val file = context.applicationContext.getExternalFilesDir("mVoice/")
-        com.tzh.baselib.util.AppPathManager.ifFolderExit(file?.absolutePath)
+        AppPathManager.ifFolderExit(file?.absolutePath)
         return file
     }
 
     fun isHaveFile(url: String) : Boolean{
         val saveName = url.substring(url.lastIndexOf("/")+1)
-        val localFile = File(getVoiceCacheFolder()?.absolutePath + "/" +(if(saveName.indexOf(FILE_OK)>0)saveName else saveName + FILE_OK))
+        val localFile = File(getVoiceCacheFolder()?.absolutePath + "/" +(if(isVoice(saveName))saveName else saveName + FILE_OK))
         return localFile.exists()
     }
 
     fun getPath(url: String):String{
         val mLocal = getVoiceCacheFolder()?.absolutePath
-        val mUrl = url.substring(url.lastIndexOf("/")+1)
+        val mUrl = getName(url)
         var url2 = "$mLocal/$mUrl"
-        url2 = if(url2.indexOf(FILE_OK)>0)url2 else url2 + FILE_OK
+        url2 = if(isVoice(url2))url2 else url2 + FILE_OK
         return File(url2).absolutePath
+    }
+
+    fun getName(url: String): String{
+        var mUrl = url.substring(url.lastIndexOf("/")+1)
+        if(mUrl.contains(".")){
+            mUrl = mUrl.substring(0,mUrl.indexOf("."))
+        }
+        return mUrl
+    }
+
+    fun isVoice(url : String) : Boolean{
+        if(url.contains(FILE_OK)){
+            return true
+        }
+        return false
     }
 }
