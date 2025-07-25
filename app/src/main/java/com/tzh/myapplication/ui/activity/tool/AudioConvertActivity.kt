@@ -2,30 +2,18 @@ package com.tzh.myapplication.ui.activity.tool
 
 import android.content.Context
 import android.content.Intent
-import android.media.AudioFormat
-import android.media.AudioManager
-import android.media.AudioTrack
+import android.graphics.Rect
 import com.tzh.baselib.util.GsonUtil
 import com.tzh.baselib.util.audio.GetAudioOrVideoUtil
-import com.tzh.baselib.util.gradDivider
-import com.tzh.baselib.util.grid
-import com.tzh.baselib.util.initAdapter
 import com.tzh.baselib.util.toDefault
+import com.tzh.baselib.util.voice.PathUtil
 import com.tzh.myapplication.R
 import com.tzh.myapplication.base.AppBaseActivity
 import com.tzh.myapplication.databinding.ActivityAudioConvertBinding
-import com.tzh.myapplication.ui.activity.tool.adapter.ConvertFormatAdapter
-import com.tzh.myapplication.ui.activity.tool.dto.ConvertFormatDto
-import com.tzh.myapplication.ui.activity.tool.util.ConvertDateUtil
 import com.tzh.myapplication.utils.ToastUtil
-import com.tzh.myapplication.utils.ffmpeg.ConvertListener
-import com.tzh.myapplication.utils.ffmpeg.FFmpegConvertUtil
-import com.tzh.myapplication.utils.ffmpeg.VoiceSeparator
-import com.tzh.myapplication.utils.ffmpeg.getSaveName
-import java.io.File
-import java.io.FileInputStream
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
+import com.tzh.myapplication.utils.mask.MaskRegion
+import com.tzh.myapplication.utils.mask.MaskType
+import com.tzh.myapplication.utils.mask.VideoProcessor
 
 /**
  * 音视频转换页面
@@ -49,32 +37,19 @@ class AudioConvertActivity : AppBaseActivity<ActivityAudioConvertBinding>(R.layo
         GsonUtil.GsonToList(intent.getStringExtra("file").toDefault("[]"),GetAudioOrVideoUtil.VideoFile::class.java)
     }
 
-    val mType by lazy {
-        intent.getStringExtra("type")
+    val videoProcessor by lazy {
+        VideoProcessor(this)
     }
-
-    var mDto : ConvertFormatDto?= null
-    val mAdapter by lazy {
-        ConvertFormatAdapter(object : ConvertFormatAdapter.ConvertListener{
-            override fun ok(data: ConvertFormatDto) {
-                mDto = data
-            }
-        })
-    }
-
-    var separator : VoiceSeparator ?= null
 
     override fun initView() {
         binding.activity = this
-        separator = VoiceSeparator(this)
-        binding.tvFileName.text = file[0].name
-        binding.recycleView.grid(4).initAdapter(mAdapter).gradDivider(10f,4)
+        // 初始化视频处理器
+        val fileName = "合成视频_" + System.currentTimeMillis() + ".mp4"
 
-        if(mType == "audio"){
-            mAdapter.setDatas(ConvertDateUtil.getAudioConvertList())
-        }else{
-            mAdapter.setDatas(ConvertDateUtil.getVideoConvertList())
-        }
+        // 设置输入输出路径
+        val outputPath = PathUtil.getVideo(this).absolutePath + "/${fileName}"
+        videoProcessor.initProcessing(file[0].path, outputPath)
+
     }
 
     override fun initData() {
@@ -82,55 +57,26 @@ class AudioConvertActivity : AppBaseActivity<ActivityAudioConvertBinding>(R.layo
     }
 
     fun startConvert(){
-        if(mDto!=null){
-            separator?.apply {
-                val (vocals, accompaniment) = this.separate(readPcmFile(File(file[0].path)))
-                playAudio(vocals)
-            }
-//            FFmpegConvertUtil.convert(file[0].path,file[0].getSaveName(mDto?.type.toDefault("mp3")),mDto?.type.toDefault("mp3"),object : ConvertListener{
-//                override fun ok(filePath : String) {
-//
-//                }
-//
-//                override fun error() {
-//
-//                }
-//            })
-        }else{
-            ToastUtil.show("请选择转换类型")
-        }
-    }
-
-
-    private fun readPcmFile(file: File): ShortArray {
-        val inputStream = FileInputStream(file)
-        val buffer = ByteArray(file.length().toInt())
-        inputStream.read(buffer)
-        inputStream.close()
-        val shortBuffer = ShortArray(buffer.size / 2)
-        ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shortBuffer)
-        return shortBuffer
-    }
-
-    private val sampleRate = 44100
-    private fun playAudio(audioData: FloatArray) {
-        // 将Float数据转换为PCM并播放
-        val buffer = ByteBuffer.allocate(audioData.size * 2)
-        audioData.forEach { sample ->
-            val shortVal = (sample * 32767.0f).toInt().coerceIn(-32768, 32767)
-            buffer.putShort(shortVal.toShort())
-        }
-        buffer.rewind()
-
-        val audioTrack = AudioTrack(
-            AudioManager.STREAM_MUSIC,
-            sampleRate,
-            AudioFormat.CHANNEL_OUT_MONO,
-            AudioFormat.ENCODING_PCM_16BIT,
-            buffer.capacity(),
-            AudioTrack.MODE_STATIC
+        // 定义遮罩区域
+        val maskRegions = listOf(
+            MaskRegion(
+                MaskType.MOSAIC,
+                Rect(40,40, 50, 50) // 马赛克区域
+            ),
+//            MaskRegion(
+//                MaskType.PIXELATE,
+//                Rect(50, 50, 200, 200) // 模糊区域
+//            )
         )
-        audioTrack.write(buffer.array(), 0, buffer.capacity())
-        audioTrack.play()
+
+        // 开始处理
+        Thread {
+            videoProcessor.processFrames(maskRegions)
+            runOnUiThread {
+                // 处理完成，更新UI
+                ToastUtil.show("视频处理完成")
+            }
+        }.start()
     }
+
 }

@@ -111,4 +111,7 @@ dependencies {
     api 'androidx.cardview:cardview:1.0.0'
 
     api 'androidx.biometric:biometric:1.2.0-alpha05' // 生物识别库
+
+    api 'org.tensorflow:tensorflow-lite:2.8.0' // 检查最新版本
+    api 'org.tensorflow:tensorflow-lite-support:0.0.0-nightly' // 检查最新版本
 }

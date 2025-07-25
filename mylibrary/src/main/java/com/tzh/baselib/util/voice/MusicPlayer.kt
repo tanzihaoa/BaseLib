@@ -2,6 +2,8 @@ package com.tzh.baselib.util.voice
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.os.Handler
+import android.os.Looper
 import com.tzh.baselib.util.sound.VoiceFileDownloadHelper
 import com.tzh.baselib.util.toDefault
 import java.io.File
@@ -9,7 +11,7 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-class MusicPlayer(context: Context) {
+class MusicPlayer(context: Context,val ok : (duration : Int) -> Unit = {}) {
 
     private val helper by lazy {
         VoiceFileDownloadHelper(context)
@@ -27,7 +29,6 @@ class MusicPlayer(context: Context) {
     fun init(){
 
     }
-
 
     /**
      * 播放音乐
@@ -82,6 +83,7 @@ class MusicPlayer(context: Context) {
 
 
         if(mUrl == helper.getPath(url)){
+            handler.post(runnable)
             mediaPlayer?.start()
         }else{
             mUrl = helper.getPath(url)
@@ -89,6 +91,7 @@ class MusicPlayer(context: Context) {
             mediaPlayer?.setDataSource(helper.getPath(url))
 
             mediaPlayer?.setOnPreparedListener {
+                handler.post(runnable)
                 mediaPlayer?.start()
             }
             mediaPlayer?.setOnCompletionListener {
@@ -111,6 +114,16 @@ class MusicPlayer(context: Context) {
         mediaPlayer = null
     }
 
+    val handler = Handler(Looper.getMainLooper())
+    val runnable = object : Runnable {
+        override fun run() {
+            val currentPos = mediaPlayer?.currentPosition
+//            Log.e("ExoPlayer===", "当前进度: $currentPos")
+            handler.postDelayed(this, 100)
+            ok.invoke(currentPos.toDefault(0))
+        }
+    }
+
     /**
      * 暂停
      */
@@ -118,6 +131,7 @@ class MusicPlayer(context: Context) {
         if(mediaPlayer?.isPlaying.toDefault(false)){
             isPause = true
             mediaPlayer?.pause()
+            handler.removeCallbacks(runnable)
         }
     }
 
@@ -128,6 +142,7 @@ class MusicPlayer(context: Context) {
         if(isPause){
             isPause = false
             mediaPlayer?.start()
+            handler.post(runnable)
         }
     }
 

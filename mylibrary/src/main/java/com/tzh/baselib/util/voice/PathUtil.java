@@ -56,4 +56,16 @@ public class PathUtil {
         AppPathManager.ifFolderExit(file.getAbsolutePath());
         return file;
     }
+
+    /**
+     * 获取存储视频文件夹
+     * @param context 上下文
+     * @return
+     */
+    public static File getVideo(Context context) {
+        File file = context.getExternalFilesDir("video/");
+        assert file != null;
+        AppPathManager.ifFolderExit(file.getAbsolutePath());
+        return file;
+    }
 }
