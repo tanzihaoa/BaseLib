@@ -1,12 +1,8 @@
 package com.tzh.myapplication.ui.activity.wallper
 
-import com.alibaba.fastjson.JSONArray
-import com.alibaba.fastjson.JSONObject
 import com.tzh.myapplication.R
 import com.tzh.myapplication.databinding.FragmentSortBinding
-import com.tzh.myapplication.network.http.InterfaceSet
 import com.tzh.baselib.base.XBaseBindingFragment
-import com.tzh.baselib.util.LogUtils
 import com.tzh.baselib.util.gradDivider
 import com.tzh.baselib.util.grid
 import com.tzh.baselib.util.initAdapter

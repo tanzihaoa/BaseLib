@@ -5,15 +5,11 @@ import android.content.Intent
 import android.view.Gravity
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.alibaba.fastjson.JSONArray
-import com.alibaba.fastjson.JSONObject
 import com.angcyo.tablayout.delegate.ViewPager1Delegate
 import com.tzh.myapplication.R
 import com.tzh.myapplication.base.AppBaseActivity
 import com.tzh.myapplication.databinding.ActivityWallPaperBinding
-import com.tzh.myapplication.network.http.InterfaceSet
 import com.tzh.baselib.util.DpToUtil
-import com.tzh.baselib.util.LogUtils
 import com.tzh.baselib.util.toDefault
 
 class WallPaperActivity : AppBaseActivity<ActivityWallPaperBinding>(R.layout.activity_wall_paper){

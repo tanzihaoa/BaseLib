@@ -2,6 +2,7 @@ package com.tzh.baselib.view
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -135,6 +136,9 @@ class ImageTextView @JvmOverloads constructor(
 
         //显示图片的位置
         val rightShowView = typedArray.getInt(R.styleable.ImageTextView_itvShowLocal, TO_TEXT_RIGHT)
+
+        val mGravity = typedArray.getInt(R.styleable.ImageTextView_itvGravity, 4)
+
         typedArray.recycle()
 
         mImageUnSelectSrc?.let { mImageView.setImageDrawable(it) }
@@ -143,11 +147,30 @@ class ImageTextView @JvmOverloads constructor(
         mTextview.text = text
         mTextview.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
         mTextview.setTextColorRes(mTextUnSelectColor)
+        mTextview.maxLines = 1
+        mTextview.ellipsize = TextUtils.TruncateAt.END
 
         mTextview.setTextStyle(textIsBold)
 
         mSpaceDp = DpToUtil.px2dip(context, space.toFloat()).toFloat()
-        gravity = Gravity.CENTER
+        when(mGravity){
+            0->{
+                gravity = Gravity.START
+            }
+            1->{
+                gravity = Gravity.TOP
+            }
+            2->{
+                gravity = Gravity.END
+            }
+            3->{
+                gravity = Gravity.BOTTOM
+            }
+            else->{
+                gravity = Gravity.CENTER
+            }
+
+        }
 
 
         isSelected = false

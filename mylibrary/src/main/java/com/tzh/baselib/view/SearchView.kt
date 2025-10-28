@@ -15,6 +15,7 @@ import com.tzh.baselib.util.bindingInflateLayout
 import com.tzh.baselib.util.getColorInt
 import com.tzh.baselib.util.setOnClickNoDouble
 import com.tzh.baselib.util.toDefault
+import androidx.core.content.withStyledAttributes
 
 /**
  *
@@ -44,32 +45,35 @@ class SearchView @JvmOverloads constructor(
     var binding: LayoutSearchViewBinding? = null
 
     private fun initView(attrs: AttributeSet) {
-        val attributes = context.obtainStyledAttributes(attrs, R.styleable.SearchView)
+        context.withStyledAttributes(attrs, R.styleable.SearchView) {
 
-        //设置字体颜色
-        mTextColor = attributes.getColor(R.styleable.SearchView_sv_text_color, getColorInt(R.color.color_333))
-        //设置字体颜色
-        mTextHintColor = attributes.getColor(R.styleable.SearchView_sv_hint_color, getColorInt(R.color.color_bbbbbb))
-        //圆角
-        mSvCorners = attributes.getDimensionPixelSize(R.styleable.SearchView_sv_corners, 99)
-        //背景颜色
-        mBackColor = attributes.getColor(R.styleable.SearchView_sv_back_color, getColorInt(R.color.color_f7f7f7))
-        //提示文字
-        mHintText = attributes.getString(R.styleable.SearchView_sv_hint).toDefault("请输入搜索内容")
-        //圆角
-        mInputTextLength = attributes.getInt(R.styleable.SearchView_sv_input_max_length, 50)
-        //超过输入限制提示文字
-        mInputHintText = attributes.getString(R.styleable.SearchView_sv_input_hint_text).toDefault("搜索字数超出"+mInputTextLength+"个，请重新输入")
-        //没有输入文字时候的提示  不设置则默认不拦截
-        mNoInputHintText = attributes.getString(R.styleable.SearchView_sv_no_input_hint_text).toDefault("")
-        //字体大小
-        mSvTextSize = attributes.getDimensionPixelSize(R.styleable.SearchView_sv_text_size, 14)
-        //图片宽高
-        mSvImageWidth = attributes.getDimensionPixelSize(R.styleable.SearchView_sv_image_width, 14)
+            //设置字体颜色
+            mTextColor =
+                getColor(R.styleable.SearchView_sv_text_color, getColorInt(R.color.color_333))
+            //设置字体颜色
+            mTextHintColor =
+                getColor(R.styleable.SearchView_sv_hint_color, getColorInt(R.color.color_bbbbbb))
+            //圆角
+            mSvCorners = getDimensionPixelSize(R.styleable.SearchView_sv_corners, 99)
+            //背景颜色
+            mBackColor =
+                getColor(R.styleable.SearchView_sv_back_color, getColorInt(R.color.color_f7f7f7))
+            //提示文字
+            mHintText = getString(R.styleable.SearchView_sv_hint).toDefault("请输入搜索内容")
+            //圆角
+            mInputTextLength = getInt(R.styleable.SearchView_sv_input_max_length, 50)
+            //超过输入限制提示文字
+            mInputHintText =
+                getString(R.styleable.SearchView_sv_input_hint_text).toDefault("搜索字数超出" + mInputTextLength + "个，请重新输入")
+            //没有输入文字时候的提示  不设置则默认不拦截
+            mNoInputHintText = getString(R.styleable.SearchView_sv_no_input_hint_text).toDefault("")
+            //字体大小
+            mSvTextSize = getDimensionPixelSize(R.styleable.SearchView_sv_text_size, 14)
+            //图片宽高
+            mSvImageWidth = getDimensionPixelSize(R.styleable.SearchView_sv_image_width, 14)
 
 
-
-        attributes.recycle()
+        }
         binding = bindingInflateLayout<LayoutSearchViewBinding>(R.layout.layout_search_view).also {
             it.layout.setShapeCorners(mSvCorners.toFloat())
             it.layout.setShapeBackgroundColor(mBackColor)

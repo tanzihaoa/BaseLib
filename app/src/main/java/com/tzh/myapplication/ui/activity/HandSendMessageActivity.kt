@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.telephony.SmsManager
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -64,7 +65,7 @@ class HandSendMessageActivity : AppBaseActivity<ActivityHandSendMessageBinding>(
                     }
                 }
             }
-        }, IntentFilter(SENT))
+        }, IntentFilter(SENT), Context.RECEIVER_EXPORTED)
 
         //---when the SMS has been delivered---
         registerReceiver(object : BroadcastReceiver() {
@@ -78,7 +79,7 @@ class HandSendMessageActivity : AppBaseActivity<ActivityHandSendMessageBinding>(
                     }
                 }
             }
-        }, IntentFilter(DELIVERED))
+        }, IntentFilter(DELIVERED), Context.RECEIVER_EXPORTED)
     }
 
     override fun initData() {

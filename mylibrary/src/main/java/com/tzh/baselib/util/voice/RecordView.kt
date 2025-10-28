@@ -124,7 +124,7 @@ class RecordView @JvmOverloads constructor(
                         mFragment?.let {act->
                             PermissionXUtil.requestRecordPermission(act,object : OnPermissionCallBackListener {
                                 override fun onAgree() {
-                                    manager?.onStartRecord(com.tzh.baselib.util.voice.PathUtil.getMasterQuestionVoice(view.context).absolutePath)
+                                    manager?.onStartRecord(PathUtil.getMasterQuestionVoice(view.context).absolutePath)
                                 }
 
                                 override fun onDisAgree() {
@@ -152,7 +152,7 @@ class RecordView @JvmOverloads constructor(
 
     fun start(){
         binding?.let {
-            manager?.onStartRecord(com.tzh.baselib.util.voice.PathUtil.getMasterQuestionVoice(it.layoutRecord.context).absolutePath)
+            manager?.onStartRecord(PathUtil.getMasterQuestionVoice(it.layoutRecord.context).absolutePath)
         }
     }
 

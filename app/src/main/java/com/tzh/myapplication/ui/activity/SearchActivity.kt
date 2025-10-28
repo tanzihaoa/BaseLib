@@ -5,8 +5,6 @@ import android.graphics.Bitmap
 import android.os.Handler
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
-import com.googlecode.tesseract.android.TessBaseAPI
-import com.tzh.baselib.util.LogUtils
 import com.tzh.baselib.view.SearchView
 import com.tzh.myapplication.R
 import com.tzh.myapplication.base.AppBaseActivity
@@ -23,14 +21,8 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding>(R.layout.activity_
         }
     }
 
-    val tessBaseAPI by lazy {
-        TessBaseAPI()
-    }
-
     override fun initView() {
         binding.activity = this
-        val dataPath = filesDir.absolutePath + "/tesseract/"
-        tessBaseAPI.init(dataPath, "chi_sim") // 使用中文语言包
 
         binding.searchView.setSvSearchListener(object : SearchView.SvSearchListener{
             override fun search(text: String): Boolean {
@@ -47,9 +39,7 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding>(R.layout.activity_
         val observer = ScreenshotObserver(handler, this,object : ScreenshotObserver.ImageListener{
             override fun image(bitmap: Bitmap) {
                 binding.ivImage.setImageBitmap(bitmap)
-                tessBaseAPI.setImage(bitmap)
-                val text = tessBaseAPI.utF8Text
-                LogUtils.e("识别结果=====",text)
+
             }
         })
         contentResolver.registerContentObserver(
@@ -61,10 +51,5 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding>(R.layout.activity_
 
     override fun initData() {
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        tessBaseAPI.end()
     }
 }

@@ -118,6 +118,20 @@
             <enum name="TO_TEXT_RIGHT" value="3" />
         </attr>
 
+        <!--居中 或者-->
+        <attr name="itvGravity" format="enum">
+            <!--靠左-->
+            <enum name="Start" value="0" />
+            <!--靠上-->
+            <enum name="TOP" value="1" />
+            <!--靠右-->
+            <enum name="END" value="2" />
+            <!--靠下-->
+            <enum name="BOTTOM" value="3" />
+            <!--居中-->
+            <enum name="CENTER" value="4" />
+        </attr>
+
     </declare-styleable>
 
     <declare-styleable name="DirectionView">

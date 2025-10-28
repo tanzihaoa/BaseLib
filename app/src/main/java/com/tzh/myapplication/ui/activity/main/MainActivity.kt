@@ -45,19 +45,12 @@ import com.tzh.baselib.util.lock.FingerprintUnlock
 import com.tzh.baselib.util.permission.PermissionLauncher
 import com.tzh.baselib.util.picture.PictureSelectorHelper
 import com.tzh.baselib.util.toDefault
-import com.tzh.myapplication.service.auto.AutoDataUtil.getApps
 import com.tzh.myapplication.ui.activity.GestureLockActivity
 import com.tzh.myapplication.ui.activity.tool.SelectAudioOrVideoActivity
 import com.tzh.myapplication.utils.AndroidUtil
-import com.ven.assists.AssistsCore
-import com.ven.assists.AssistsCore.getNodes
-import com.ven.assists.AssistsCore.logNode
-import com.ven.assists.AssistsCore.txt
-import com.ven.assists.service.AssistsService
-import com.ven.assists.service.AssistsServiceListener
 
 
-class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main), AssistsServiceListener {
+class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main){
 
     companion object{
         fun start(context: Context){
@@ -99,7 +92,7 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
             if(!AndroidUtil.isIgnoringBatteryOptimizations(this)){
                 AndroidUtil.requestIgnoreBatteryOptimizations(this)
             }else{
-                AssistsCore.openAccessibilitySetting()
+
             }
         }
 
@@ -111,8 +104,6 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
         }
-
-        AssistsService.listeners.add(this)
 
     }
 
@@ -327,27 +318,5 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
      */
     fun selectAudioOrVideo(type : String){
         SelectAudioOrVideoActivity.start(this,type,true)
-    }
-
-
-    override fun onAccessibilityEvent(accessibilityEvent: AccessibilityEvent) {
-        super.onAccessibilityEvent(accessibilityEvent)
-
-        var text = mutableListOf<String>()
-        accessibilityEvent.source?.getNodes()?.forEach {
-            if(it.txt().isNotEmpty()){
-                text.add(it.txt())
-            }
-        }
-        if(text.isNotEmpty()){
-            LogUtils.e("解析服务======", GsonUtil.GsonString(text))
-        }
-        LogUtils.e("className======",accessibilityEvent.className.toString())
-    }
-
-
-    override fun onServiceConnected(service: AssistsService) {
-//        onBackApp()
-        AssistsCore.getAllNodes().forEach { it.logNode() }
     }
 }

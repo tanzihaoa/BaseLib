@@ -1,6 +1,7 @@
 package com.tzh.myapplication.ui.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -74,6 +75,7 @@ class SendMessageActivity : AppBaseActivity<ActivitySendMessageBinding>(R.layout
 
     var SENT = "SMS_SENT"
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun initView() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         binding.titleBar.setRightTitleTxt(AndroidUtil.getVersionName(this))

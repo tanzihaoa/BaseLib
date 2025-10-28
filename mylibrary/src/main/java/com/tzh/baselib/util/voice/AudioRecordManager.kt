@@ -228,7 +228,7 @@ class AudioRecordManager(var lifecycle: LifecycleOwner) : LifecycleObserver {
                     FileOutputStream(mOutPcmFile)
                 } catch (e: FileNotFoundException) {
                     e.printStackTrace()
-                    com.tzh.baselib.util.voice.MainHandler.getInstance()?.postRunnable { callback?.onError(Throwable("创建文件失败!")) }
+                    MainHandler.getInstance()?.postRunnable { callback?.onError(Throwable("创建文件失败!")) }
                     return
                 }
                 //设置线程权限
@@ -249,7 +249,7 @@ class AudioRecordManager(var lifecycle: LifecycleOwner) : LifecycleObserver {
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
-                com.tzh.baselib.util.voice.MainHandler.getInstance()?.postRunnable { callback?.onSuccess(mOutPcmFile) }
+                MainHandler.getInstance()?.postRunnable { callback?.onSuccess(mOutPcmFile) }
             }
         }
         recordStatus = STATUS_RECORD
@@ -308,7 +308,7 @@ class AudioRecordManager(var lifecycle: LifecycleOwner) : LifecycleObserver {
                 it.onError(Throwable("文件错误"))
             } else {
                 // val outFile = File((pcmFile.parentFile!!.absolutePath) + "/" + System.currentTimeMillis() + ".mp3")
-                it.onNext(com.tzh.baselib.util.voice.PcmToMp3Util.pcmToMp3(pcmFile))
+                it.onNext(PcmToMp3Util.pcmToMp3(pcmFile))
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -426,7 +426,7 @@ class AudioRecordManager(var lifecycle: LifecycleOwner) : LifecycleObserver {
                 it.onError(Throwable("文件错误"))
             } else {
 //                val outFile = File((pcmFile.parentFile!!.absolutePath) + "/" + System.currentTimeMillis() + ".mp3")
-                it.onNext(com.tzh.baselib.util.voice.PcmToMp3Util.pcmToMp3(pcmFile))
+                it.onNext(PcmToMp3Util.pcmToMp3(pcmFile))
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -456,7 +456,7 @@ class AudioRecordManager(var lifecycle: LifecycleOwner) : LifecycleObserver {
                 it.onError(Throwable("文件错误"))
             } else {
                 val outFile = File((pcmFile.parentFile!!.absolutePath) + "/" + System.currentTimeMillis() + ".mp3")
-                it.onNext(com.tzh.baselib.util.voice.PcmToMp3Util.convertAudioFiles(pcmFile, outFile))
+                it.onNext(PcmToMp3Util.convertAudioFiles(pcmFile, outFile))
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

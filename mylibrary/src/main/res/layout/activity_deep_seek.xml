@@ -37,6 +37,7 @@
             app:shapeBackgroundColor="@color/color_00f3b8"
             app:shapeCorners="12dp"
             android:gravity="center"
+            android:ellipsize="end"
             android:text="问他"
             android:onClick="@{()->activity.translate()}"
             android:textColor="@color/color_fff"
