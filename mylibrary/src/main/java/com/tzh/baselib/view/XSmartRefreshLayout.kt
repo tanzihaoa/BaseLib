@@ -33,6 +33,7 @@ class XSmartRefreshLayout @JvmOverloads constructor(context: Context, attrs: Att
     var pageCount = 0
 
     fun onRefresh() {
+        isRefresh = true
         mRefreshListener?.onRefresh(this)
     }
 
@@ -103,7 +104,10 @@ class XSmartRefreshLayout @JvmOverloads constructor(context: Context, attrs: Att
         if (this.isLoading) {
             finishLoadMore()
         }
-        if (pageIndex > 0 && pageCount > 0) {
+        if(isShowNoData){
+            adapter?.showNoMoreData(true)
+            setEnableLoadMore(false)
+        }else if (pageIndex > 0 && pageCount > 0) {
             adapter?.run {
                 if (pageIndex >= pageCount) {
                     adapter.showNoMoreData(true)
