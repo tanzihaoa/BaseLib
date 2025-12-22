@@ -16,7 +16,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.tzh.baselib.R
 import com.tzh.baselib.util.AppKtx
-import com.tzh.baselib.util.Util
 import com.tzh.baselib.util.dpToPx
 
 abstract class BaseBindingDialog<B : ViewDataBinding> @JvmOverloads constructor(

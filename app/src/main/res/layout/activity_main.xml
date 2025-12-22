@@ -502,5 +502,16 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+        <com.tzh.baselib.view.pickerview.HorizontalPickerView
+            android:id="@+id/pickerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:normalTextColor="#666666"
+            app:selectedTextColor="#FF4081"
+            app:normalTextSize="14sp"
+            app:selectedTextSize="18sp"
+            app:itemWidth="100dp"
+            app:itemHeight="50dp"
+            app:isCircular="true"/>
     </LinearLayout>
 </layout>

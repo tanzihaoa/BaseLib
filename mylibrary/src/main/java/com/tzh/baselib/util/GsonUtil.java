@@ -22,8 +22,6 @@ import java.util.Map;
 public class GsonUtil {
     private static final Gson GSON = new Gson();
 
-    private static final JsonParser PARSER = new JsonParser();
-
 
     private GsonUtil() {
 
@@ -38,23 +36,21 @@ public class GsonUtil {
     /**
      * 转成json
      *
-     * @param object
-     * @return
+     * @param object f
+     * @return f
      */
     public static String GsonString(Object object) {
         String gsonString = null;
-        if (GSON != null) {
-            gsonString = GSON.toJson(object);
-        }
+        gsonString = GSON.toJson(object);
         return gsonString;
     }
 
     /**
      * 转成bean
      *
-     * @param gsonString
-     * @param cls
-     * @return
+     * @param gsonString f
+     * @param cls f
+     * @return f
      */
     public static <T> T GsonToBean(String gsonString, Class<T> cls) {
         T t = null;
@@ -66,15 +62,15 @@ public class GsonUtil {
      * 转成list
      * 解决泛型问题
      *
-     * @param json
-     * @param cls
-     * @param <T>
-     * @return
+     * @param json f
+     * @param cls f
+     * @param <T> f
+     * @return f
      */
     public static <T> List<T> GsonToList(String json, Class<T> cls) {
         Gson GSON = new Gson();
         List<T> list = new ArrayList<T>();
-        JsonArray array = new JsonParser().parse(json).getAsJsonArray();
+        JsonArray array = JsonParser.parseString(json).getAsJsonArray();
         for (final JsonElement elem : array) {
             list.add(GSON.fromJson(elem, cls));
         }
@@ -85,8 +81,8 @@ public class GsonUtil {
     /**
      * 转成list中有map的
      *
-     * @param gsonString
-     * @return
+     * @param gsonString f
+     * @return f
      */
     public static <T> List<Map<String, T>> GsonToListMaps(String gsonString) {
         List<Map<String, T>> list;
@@ -99,23 +95,21 @@ public class GsonUtil {
     /**
      * 转成map的
      *
-     * @param gsonString
-     * @return
+     * @param gsonString f
+     * @return f
      */
     public static <T> Map<String, T> GsonToMaps(String gsonString) {
         Map<String, T> map = null;
-        if (GSON != null) {
-            map = GSON.fromJson(gsonString, new TypeToken<Map<String, T>>() {
-            }.getType());
-        }
+        map = GSON.fromJson(gsonString, new TypeToken<Map<String, T>>() {
+        }.getType());
         return map;
     }
 
     /**
      * 转成map的
      *
-     * @param gsonString
-     * @return
+     * @param gsonString f
+     * @return f
      */
     public static LinkedHashMap<String, String> GsonToLinkedHashMap(String gsonString) {
         LinkedHashMap<String, String> map = null;
@@ -129,9 +123,6 @@ public class GsonUtil {
 
     /**
      * 读取Json文件
-     *
-     * @author: 小嵩
-     * @date: 2017/3/16 16:22
      */
 
     public static String getJsonFromFile(Context context, String fileName) {
@@ -155,6 +146,7 @@ public class GsonUtil {
         List<T> result = new ArrayList<T>();
         try {
             JsonArray array = stringToJsonArray(jsonArrayStr);
+            assert array != null;
             for (JsonElement element : array) {
                 result.add(GSON.fromJson(element, elementCls));
             }
@@ -179,6 +171,7 @@ public class GsonUtil {
         List result = new ArrayList();
         try {
             JsonArray array = stringToJsonArray(jsonArrayStr);
+            assert array != null;
             for (JsonElement element : array) {
                 result.add(GSON.fromJson(element, type));
             }
@@ -190,7 +183,7 @@ public class GsonUtil {
 
     public static JsonArray stringToJsonArray(String str) {
         try {
-            return PARSER.parse(str).getAsJsonArray();
+            return JsonParser.parseString(str).getAsJsonArray();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

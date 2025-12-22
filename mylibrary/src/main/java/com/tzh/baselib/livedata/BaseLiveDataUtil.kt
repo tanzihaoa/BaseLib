@@ -4,7 +4,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.tzh.baselib.util.pay.PayRefreshEvent
 
 
 /**
@@ -16,14 +15,6 @@ class ActivityCloseLiveData : MutableLiveData<Boolean>() {
     }
 }
 
-/**
- * 支付结果监听
- */
-class PayRefreshData : MutableLiveData<PayRefreshEvent>() {
-    companion object {
-        val instance by lazy { PayRefreshData() }
-    }
-}
 
 /**
  * 拦截 liveData 不向刚新建的观察者发送数据

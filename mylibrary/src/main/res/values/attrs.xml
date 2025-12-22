@@ -147,4 +147,21 @@
             <enum name="close" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="HorizontalPickerView">
+        <attr name="normalTextColor" format="color" />
+        <attr name="selectedTextColor" format="color" />
+        <attr name="normalTextSize" format="dimension" />
+        <attr name="selectedTextSize" format="dimension" />
+        <attr name="itemWidth" format="dimension" />
+        <attr name="itemHeight" format="dimension" />
+        <!-- 添加循环属性 -->
+        <attr name="isCircular" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="Horizontal2PickerView">
+        <attr name="pv_textColor" format="color|reference"/>
+        <attr name="pv_selectedTextColor" format="color|reference"/>
+        <attr name="pv_textSize" format="dimension"/>
+    </declare-styleable>
 </resources>

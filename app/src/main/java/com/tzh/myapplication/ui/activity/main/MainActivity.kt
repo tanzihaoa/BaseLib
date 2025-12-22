@@ -8,8 +8,6 @@ import android.os.Build
 import android.os.Environment
 import android.provider.Settings
 import android.util.Log
-import android.view.accessibility.AccessibilityEvent
-import android.view.accessibility.AccessibilityNodeInfo
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricPrompt
 import com.luck.picture.lib.config.SelectMimeType
@@ -39,8 +37,6 @@ import com.tzh.myapplication.utils.window.WindowUtil
 import com.tzh.baselib.activity.tool.ScanUtilActivity
 import com.tzh.baselib.activity.tool.TranslateActivity
 import com.tzh.baselib.livedata.observeForeverNoBack
-import com.tzh.baselib.util.GsonUtil
-import com.tzh.baselib.util.LogUtils
 import com.tzh.baselib.util.lock.FingerprintUnlock
 import com.tzh.baselib.util.permission.PermissionLauncher
 import com.tzh.baselib.util.picture.PictureSelectorHelper
@@ -104,7 +100,6 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
         }
-
     }
 
     override fun initData() {
