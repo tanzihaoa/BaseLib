@@ -16,8 +16,6 @@ import com.scwang.smart.refresh.layout.constant.RefreshState
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle
 import com.scwang.smart.refresh.layout.util.SmartUtil
 import com.tzh.baselib.R
-import com.tzh.baselib.util.LoadImageUtil
-import pl.droidsonroids.gif.GifDrawable
 
 /**
  * smartlayout 自定义刷新
@@ -52,7 +50,6 @@ class AppRefreshLayout @JvmOverloads constructor(
             RefreshState.None -> {
                 mStateTv?.text = "下拉刷新"
                 mStateGif?.setWillNotDraw(true)
-                (mStateGif?.drawable as? GifDrawable)?.recycle()
                 mStateGif?.setImageDrawable(null)
             }
             RefreshState.Refreshing -> {

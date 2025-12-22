@@ -98,8 +98,6 @@ dependencies {
 
     implementation project(':mylibrary')
 
-    // 腾讯MMKV
-    implementation 'com.tencent:mmkv:2.2.2'
     //FastJSON
     implementation 'com.alibaba:fastjson:1.2.83'
 

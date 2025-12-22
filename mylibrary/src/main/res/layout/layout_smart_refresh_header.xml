@@ -9,7 +9,7 @@
     tools:gravity="center">
 
 
-    <pl.droidsonroids.gif.GifImageView
+    <com.tzh.baselib.shapeview.ShapeImageView
         android:id="@+id/refresh_gif"
         android:layout_width="50dp"
         android:layout_height="50dp" />
