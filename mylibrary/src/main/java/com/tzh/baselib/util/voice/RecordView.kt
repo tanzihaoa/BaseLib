@@ -39,7 +39,6 @@ class RecordView @JvmOverloads constructor(
     var mSecond : Long = 0
     var file : File ?= null
     var pcmFile : File ?= null
-    var manager : AudioRecordManager?= null
     var mMaxSecond = 0
     var mMinSecond = 0
     private var mActivity : AppCompatActivity ?= null
@@ -55,44 +54,7 @@ class RecordView @JvmOverloads constructor(
     }
 
     private fun initView(lifecycle: LifecycleOwner){
-        manager = AudioRecordManager(lifecycle).apply { this.recordTimeMax = mMaxSecond.toLong() }
-        manager?.callback = object : AudioRecordManager.RecordCallback{
-            override fun onSuccess(outputFile: File?) {
-                pcmFile = outputFile
-                manager?.pcmToMp3(outputFile)
-                endRecord()
-                LogUtils.e("RecordView","onSuccess")
-            }
 
-            override fun onError(t: Throwable?) {
-
-            }
-
-            override fun onStart() {
-                startRecord()
-            }
-
-            override fun onTime(second: Long) {
-                binding?.tvTime?.text = second.toString()+"s"
-                mSecond = second
-                binding?.recordView?.progress = second.toInt()
-                if(mMinSecond>0 && second.toInt() > mMinSecond){
-                    binding?.tvVoiceSecond?.visibility = INVISIBLE
-                }
-            }
-
-            override fun onStop() {
-                LogUtils.e("RecordView","暂停2")
-            }
-
-            override fun onPcmToMp3(outputFile: File?) {
-                pcmFile?.delete()
-                file = outputFile
-                if (outputFile != null) {
-                    callback?.recordEnd(outputFile,mSecond)
-                }
-            }
-        }
     }
 
     var binding: LayoutRecordViewBinding? = null
@@ -107,39 +69,11 @@ class RecordView @JvmOverloads constructor(
             it.recordView.max = mMaxSecond
             //开始录音
             it.layoutRecord.setOnClickNoDouble { view->
-                if(manager!=null){
-                    if(mActivity!=null || mFragment != null){
-                        mActivity?.let {act->
-                            PermissionXUtil.requestRecordPermission(act,object : OnPermissionCallBackListener {
-                                override fun onAgree() {
-                                    start()
-                                }
 
-                                override fun onDisAgree() {
-
-                                }
-                            })
-                        }
-
-                        mFragment?.let {act->
-                            PermissionXUtil.requestRecordPermission(act,object : OnPermissionCallBackListener {
-                                override fun onAgree() {
-                                    manager?.onStartRecord(PathUtil.getMasterQuestionVoice(view.context).absolutePath)
-                                }
-
-                                override fun onDisAgree() {
-
-                                }
-                            })
-                        }
-                    }
-                }else{
-                    Toast.makeText(context,"请先初始化",Toast.LENGTH_LONG).show()
-                }
             }
             //结束录音
             it.layoutInRecord.setOnClickNoDouble {
-                stop()
+
             }
 
 
@@ -148,20 +82,6 @@ class RecordView @JvmOverloads constructor(
             }
         }
 
-    }
-
-    fun start(){
-        binding?.let {
-            manager?.onStartRecord(PathUtil.getMasterQuestionVoice(it.layoutRecord.context).absolutePath)
-        }
-    }
-
-    fun stop(){
-        binding?.let {
-            if(manager?.recordStatus == AudioRecordManager.STATUS_RECORD){
-                manager?.onStopRecord()
-            }
-        }
     }
 
     /**
@@ -227,7 +147,6 @@ class RecordView @JvmOverloads constructor(
         file?.delete()
         file = null
         mSecond = 0
-        start()
     }
 
     fun toInit(){
@@ -300,9 +219,7 @@ class RecordView @JvmOverloads constructor(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
-        if(manager?.recordStatus == AudioRecordManager.STATUS_RECORD){
-            stop()
-        }
+
     }
 
 

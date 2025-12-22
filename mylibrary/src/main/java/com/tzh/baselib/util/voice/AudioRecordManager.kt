@@ -1,9 +1,11 @@
 package com.tzh.baselib.util.voice
 
+import android.Manifest
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Process
+import androidx.annotation.RequiresPermission
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -195,6 +197,7 @@ class AudioRecordManager(var lifecycle: LifecycleOwner) : LifecycleObserver {
     /**
      * 初始化 录制器
      */
+    @RequiresPermission(Manifest.permission.RECORD_AUDIO)
     private fun initRecord() {
         if (mDirectoryFile == null) {
             return
@@ -308,7 +311,7 @@ class AudioRecordManager(var lifecycle: LifecycleOwner) : LifecycleObserver {
                 it.onError(Throwable("文件错误"))
             } else {
                 // val outFile = File((pcmFile.parentFile!!.absolutePath) + "/" + System.currentTimeMillis() + ".mp3")
-                it.onNext(PcmToMp3Util.pcmToMp3(pcmFile))
+//                it.onNext(PcmToMp3Util.pcmToMp3(pcmFile))
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -426,7 +429,7 @@ class AudioRecordManager(var lifecycle: LifecycleOwner) : LifecycleObserver {
                 it.onError(Throwable("文件错误"))
             } else {
 //                val outFile = File((pcmFile.parentFile!!.absolutePath) + "/" + System.currentTimeMillis() + ".mp3")
-                it.onNext(PcmToMp3Util.pcmToMp3(pcmFile))
+//                it.onNext(PcmToMp3Util.pcmToMp3(pcmFile))
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

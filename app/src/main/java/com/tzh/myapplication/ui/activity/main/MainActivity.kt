@@ -9,7 +9,6 @@ import android.os.Environment
 import android.provider.Settings
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.biometric.BiometricPrompt
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
@@ -37,7 +36,6 @@ import com.tzh.myapplication.utils.window.WindowUtil
 import com.tzh.baselib.activity.tool.ScanUtilActivity
 import com.tzh.baselib.activity.tool.TranslateActivity
 import com.tzh.baselib.livedata.observeForeverNoBack
-import com.tzh.baselib.util.lock.FingerprintUnlock
 import com.tzh.baselib.util.permission.PermissionLauncher
 import com.tzh.baselib.util.picture.PictureSelectorHelper
 import com.tzh.baselib.util.toDefault
@@ -63,20 +61,6 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
 
     val mWindowUtil by lazy {
         WindowUtil(this)
-    }
-
-    val fingerprintUnlock by lazy {
-        FingerprintUnlock(this,object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                super.onAuthenticationSucceeded(result)
-                ToastUtil.show("指纹识别成功")
-            }
-
-            override fun onAuthenticationFailed() {
-                super.onAuthenticationFailed()
-                ToastUtil.show("指纹识别失败")
-            }
-        })
     }
 
     override fun initView() {
@@ -292,13 +276,6 @@ class MainActivity : AppBaseActivity<ActivityMainBinding>(R.layout.activity_main
                 add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
         }
-    }
-
-    /**
-     * 指纹解锁
-     */
-    fun fingerprintUnlock(){
-        fingerprintUnlock.startAuthentication()
     }
 
     /**

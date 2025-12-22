@@ -89,9 +89,6 @@ dependencies {
     //可选
     api 'com.github.angcyo.DslTablayout:ViewPager2Delegate:3.7.1'
 
-    //二维码扫描库
-    api 'com.journeyapps:zxing-android-embedded:3.6.0'
-    api 'com.google.zxing:core:3.4.1'
 
     api 'io.github.lucksiege:pictureselector:v3.11.1'
     api 'io.github.lucksiege:compress:v3.11.1'
@@ -100,12 +97,8 @@ dependencies {
     api 'com.liulishuo.okdownload:okdownload:1.0.7'
     api 'com.liulishuo.okdownload:okhttp:1.0.7'
 
-    api 'com.czt.mp3recorder:library:1.0.3'
-
     //中英文转换框架
     api 'com.belerweb:pinyin4j:2.5.1'
 
     api 'androidx.cardview:cardview:1.0.0'
-
-    api 'androidx.biometric:biometric:1.2.0-alpha05' // 生物识别
 }

@@ -18,12 +18,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <com.journeyapps.barcodescanner.DecoratedBarcodeView
-                android:id="@+id/dbv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                app:zxing_scanner_layout="@layout/content_scan"/>
+
         </RelativeLayout>
     </LinearLayout>
 </layout>
