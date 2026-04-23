@@ -155,16 +155,16 @@ class ImageTextView @JvmOverloads constructor(
         mSpaceDp = DpToUtil.px2dip(context, space.toFloat()).toFloat()
         when(mGravity){
             0->{
-                gravity = Gravity.START
+                gravity = Gravity.START and Gravity.CENTER_VERTICAL
             }
             1->{
-                gravity = Gravity.TOP
+                gravity = Gravity.TOP and Gravity.CENTER_HORIZONTAL
             }
             2->{
-                gravity = Gravity.END
+                gravity = Gravity.END and Gravity.CENTER_VERTICAL
             }
             3->{
-                gravity = Gravity.BOTTOM
+                gravity = Gravity.BOTTOM and Gravity.CENTER_HORIZONTAL
             }
             else->{
                 gravity = Gravity.CENTER
@@ -244,6 +244,19 @@ class ImageTextView @JvmOverloads constructor(
 
     fun setText(str: String?) {
         mTextview.text = str.toDefault("")
+    }
+
+    fun setImage(img : Int) {
+        mImageView.setImageResource(img)
+    }
+
+    fun setTextColor(color : Int){
+        if(mTextSelectColor == mTextUnSelectColor){
+            mTextSelectColor = color
+        }
+        mTextUnSelectColor = color
+        mTextview.setTextColorRes(mTextUnSelectColor)
+
     }
 
     override fun setSelected(selected: Boolean) {

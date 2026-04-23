@@ -93,12 +93,12 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    implementation 'com.airbnb.android:lottie:6.0.0'
+    implementation 'com.airbnb.android:lottie:6.7.1'
     api 'androidx.multidex:multidex:2.0.1'
 
     implementation project(':mylibrary')
 
     //FastJSON
-    implementation 'com.alibaba:fastjson:1.2.83'
+    implementation 'com.alibaba:fastjson:2.0.61'
 
 }

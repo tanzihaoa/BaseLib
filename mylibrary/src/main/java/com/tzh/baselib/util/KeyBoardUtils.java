@@ -23,14 +23,14 @@ public class KeyBoardUtils {
      * @param mEditText 输入框
      * @param mContext  上下文
      */
-    public static void openKeybord(EditText mEditText, Context mContext) {
+    public static void openKeyboard(EditText mEditText, Context mContext) {
         mEditText.setFocusable(true);
         mEditText.setFocusableInTouchMode(true);
         mEditText.requestFocus();
 //        mContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         InputMethodManager imm = (InputMethodManager) mContext
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(mEditText, InputMethodManager.RESULT_SHOWN);
+        imm.showSoftInput(mEditText, InputMethodManager.SHOW_FORCED);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
                 InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
@@ -50,7 +50,7 @@ public class KeyBoardUtils {
         }
     }
 
-    public static void hideOrShowKeybord(Context context) {
+    public static void hideOrShowKeyboard(Context context) {
         if (context == null) {
             return;
         }
@@ -61,7 +61,7 @@ public class KeyBoardUtils {
     /**
      * 自动关闭软键盘
      *
-     * @param activity
+     * @param activity 1
      */
     public static void closeKeyboard(Activity activity) {
         if (activity == null) {
@@ -76,16 +76,16 @@ public class KeyBoardUtils {
     /**
      * 隐藏软键盘(有输入框)
      *
-     * @param context
-     * @param mEditText
+     * @param context 1
+     * @param mEditText 1
      */
     public static void hideSoftKeyboard(@Nullable Context context, @NonNull EditText mEditText) {
         if(context==null){
             return;
         }
-        InputMethodManager inputmanger = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (inputmanger != null) {
-            inputmanger.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+        InputMethodManager inputManger = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputManger != null) {
+            inputManger.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
         }
     }
 
@@ -103,21 +103,17 @@ public class KeyBoardUtils {
     /**
      * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
      *
-     * @param v
-     * @param event
-     * @return
+     * @param v 1
+     * @param event 1
+     * @return 1
      */
     public static boolean isShouldHideKeyboard(View v, MotionEvent event) {
         if ((v instanceof EditText)) {
             int[] l = {0, 0};
             v.getLocationInWindow(l);
             int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom) {
-                // 点击EditText的事件，忽略它。
-                return false;
-            } else {
-                return true;
-            }
+            // 点击EditText的事件，忽略它。
+            return !(event.getX() > left) || !(event.getX() < right) || !(event.getY() > top) || !(event.getY() < bottom);
         }
         // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditText上，和用户用轨迹球选择其他的焦点
         return false;
@@ -127,7 +123,7 @@ public class KeyBoardUtils {
     /**
      * 获取InputMethodManager，隐藏软键盘
      *
-     * @param token
+     * @param token 1
      */
     private static boolean hideKeyboard(Context context, IBinder token) {
         if (token != null) {

@@ -21,7 +21,7 @@ import androidx.core.content.withStyledAttributes
  *
  */
 class SearchView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 
@@ -113,7 +113,7 @@ class SearchView @JvmOverloads constructor(
                         Toast.makeText(context,mInputHintText,Toast.LENGTH_LONG).show()
                     }else{
                         if( mListener?.search(if(TextUtils.isEmpty(it.etText.text.toString())) it.etText.text.toString() else it.etText.text.toString()).toDefault(true)){
-                            com.tzh.baselib.util.KeyBoardUtils.closeKeyboard(it.etText,context)
+                            KeyBoardUtils.closeKeyboard(it.etText,context)
                         }
                     }
                     return@setOnEditorActionListener true
@@ -149,7 +149,7 @@ class SearchView @JvmOverloads constructor(
 
     fun showKeyBord(){
         binding?.etText?.let {
-            com.tzh.baselib.util.KeyBoardUtils.openKeybord(it,it.context)
+            KeyBoardUtils.openKeyboard(it,it.context)
         }
     }
 

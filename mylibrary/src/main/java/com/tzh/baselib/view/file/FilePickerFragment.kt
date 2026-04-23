@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tzh.baselib.R
 import java.io.File
+import java.util.Locale
 
 class FilePickerFragment : Fragment() {
     private lateinit var adapter: FilePickerAdapter
@@ -80,7 +81,7 @@ class FilePickerFragment : Fragment() {
                 lastModified = file.lastModified(),
                 iconRes = getIconForFile(file)
             )
-        }?.sortedWith(compareBy({ !it.isDirectory }, { it.name.toLowerCase() }))
+        }?.sortedWith(compareBy({ !it.isDirectory }, { it.name.lowercase(Locale.ROOT) }))
 
         fileList?.let { adapter.updateFiles(it.toMutableList()) }
     }
@@ -88,11 +89,11 @@ class FilePickerFragment : Fragment() {
     private fun getIconForFile(file: File): Int {
         return when {
             file.isDirectory -> R.drawable.icon_lib_folder
-            file.extension.toLowerCase() in listOf("jpg", "png", "gif") -> R.drawable.icon_lib_image
-            file.extension.toLowerCase() in listOf("mp3", "wav", "flac") -> R.drawable.icon_lib_audio
-            file.extension.toLowerCase() in listOf("mp4", "avi", "mkv") -> R.drawable.icon_lib_video
-            file.extension.toLowerCase() in listOf("pdf", "doc", "docx") -> R.drawable.icon_lib_document
-            file.extension.toLowerCase() in listOf("zip", "rar", "7z") -> R.drawable.icon_lib_archive
+            file.extension.lowercase(Locale.ROOT) in listOf("jpg", "png", "gif") -> R.drawable.icon_lib_image
+            file.extension.lowercase(Locale.ROOT) in listOf("mp3", "wav", "flac") -> R.drawable.icon_lib_audio
+            file.extension.lowercase(Locale.ROOT) in listOf("mp4", "avi", "mkv") -> R.drawable.icon_lib_video
+            file.extension.lowercase(Locale.ROOT) in listOf("pdf", "doc", "docx") -> R.drawable.icon_lib_document
+            file.extension.lowercase(Locale.ROOT) in listOf("zip", "rar", "7z") -> R.drawable.icon_lib_archive
             else -> R.drawable.icon_lib_file
         }
     }
