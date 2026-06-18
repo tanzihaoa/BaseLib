@@ -33,11 +33,10 @@ class XSmartRefreshLayout @JvmOverloads constructor(context: Context, attrs: Att
     var pageCount = 0
 
     fun onRefresh() {
-        isRefresh = true
         mRefreshListener?.onRefresh(this)
     }
 
-    fun setOnRefreshLoadMoreListener(block: ((Layout: RefreshLayout) -> Unit?)? = null): RefreshLayout {
+    fun setOnRefreshLoadMoreListener(block: ((layout: RefreshLayout) -> Unit?)? = null): RefreshLayout {
         return if (block != null) {
             super.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
                 override fun onRefresh(refreshLayout: RefreshLayout) {
@@ -93,9 +92,7 @@ class XSmartRefreshLayout @JvmOverloads constructor(context: Context, attrs: Att
      */
     fun loadSuccess(
         adapter: XRvBindingPureDataAdapter<*>? = null,
-        isShowNoData: Boolean = true,
-        noDataTip: String? = null,
-        noDataMinTip: String? = null
+        isShowNoData: Boolean = true
     ) {
         oldPageIndex = pageIndex
         if (this.isRefreshing) {
@@ -104,10 +101,32 @@ class XSmartRefreshLayout @JvmOverloads constructor(context: Context, attrs: Att
         if (this.isLoading) {
             finishLoadMore()
         }
-        if(isShowNoData){
-            adapter?.showNoMoreData(true)
-            setEnableLoadMore(false)
-        }else if (pageIndex > 0 && pageCount > 0) {
+        adapter?.run {
+            if (isShowNoData) {
+                adapter.showNoMoreData(true)
+                setEnableLoadMore(false)
+            } else {
+                adapter.showNoMoreData(false)
+                setEnableLoadMore(true)
+            }
+
+        }
+    }
+
+
+    /**
+     * 加载数据 成功 使用这个
+     */
+    fun loadAutoSuccess(adapter: XRvBindingPureDataAdapter<*>? = null) {
+        oldPageIndex = pageIndex
+        if (this.isRefreshing) {
+            finishRefresh()
+        }
+        if (this.isLoading) {
+            finishLoadMore()
+        }
+
+        if (pageIndex > 0 && pageCount > 0) {
             adapter?.run {
                 if (pageIndex >= pageCount) {
                     adapter.showNoMoreData(true)
@@ -127,10 +146,7 @@ class XSmartRefreshLayout @JvmOverloads constructor(context: Context, attrs: Att
     /**
      * 加载失败
      */
-    fun loadError(
-        throwable: Throwable? = null,
-        isReLoad: Boolean = true
-    ) {
+    fun loadError() {
         pageIndex = oldPageIndex
         //如果是 刷新操作 的加载失败，那么pageIndex也需要+1，比
         if (this.isLoading) {

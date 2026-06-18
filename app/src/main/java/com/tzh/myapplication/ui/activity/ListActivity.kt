@@ -36,7 +36,6 @@ class ListActivity : AppBaseActivity<ActivityListBinding>(R.layout.activity_list
     }
 
     override fun initData() {
-
     }
 
 
@@ -50,6 +49,6 @@ class ListActivity : AppBaseActivity<ActivityListBinding>(R.layout.activity_list
         }else{
             mAdapter.addDatas(list)
         }
-        binding.smartLayout.loadSuccess(mAdapter)
+        binding.smartLayout.loadSuccess(mAdapter,false)
     }
 }
