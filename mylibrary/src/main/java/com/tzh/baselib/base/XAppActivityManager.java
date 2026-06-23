@@ -149,6 +149,22 @@ public class XAppActivityManager {
 
 
     /**
+     * 判断是否存在某个 activity
+     * @param cls activity
+     */
+    public boolean haveActivity(Class cls){
+        for (AppCompatActivity activity:mActivityStack) {
+            String name1 = activity.getClass().getName();
+            String name2 = cls.getName();
+            if(name1.equals(name2)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * 退出栈中所有的activity
      */
     public void finishAllActivity() {
